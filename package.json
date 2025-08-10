@@ -1,17 +1,23 @@
 {
-    "$schema": "https://json.schemastore.org/package.json",
     "private": true,
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "lighthouse": "node scripts/lighthouse-check.js",
+        "lighthouse:prod": "node scripts/lighthouse-check.js https://your-domain.com",
+        "performance:check": "npm run lighthouse"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.0.0",
-        "axios": "^1.11.0",
+        "autoprefixer": "^10.4.20",
+        "axios": "^1.7.4",
         "concurrently": "^9.0.1",
-        "laravel-vite-plugin": "^2.0.0",
-        "tailwindcss": "^4.0.0",
-        "vite": "^7.0.4"
+        "laravel-vite-plugin": "^1.2.0",
+        "postcss": "^8.4.47",
+        "tailwindcss": "^3.4.13",
+        "vite": "^6.0.11"
+    },
+    "dependencies": {
+        "swiper": "^11.2.10"
     }
 }

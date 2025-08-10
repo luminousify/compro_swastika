@@ -1,0 +1,23 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 5
+    paths:
+        - app/
+        - database/
+        - routes/
+        - tests/
+    
+    # Ignore errors in vendor and generated files
+    excludePaths:
+        - vendor/
+        - storage/
+        - bootstrap/cache/
+        - node_modules (?)
+    
+    # Additional rules for better code quality
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    checkDynamicProperties: false
+    treatPhpDocTypesAsCertain: false
