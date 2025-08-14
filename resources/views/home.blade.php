@@ -45,11 +45,11 @@
                 <!-- Desktop Navigation -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-6">
-                        <a href="/" class="nav-link nav-link-active">Home</a>
+                        <a href="/" class="nav-link nav-link-active">Beranda</a>
                         <a href="/visi-misi" class="nav-link">Visi & Misi</a>
-                        <a href="/milestones" class="nav-link">Milestones</a>
-                        <a href="/line-of-business" class="nav-link">Line of Business</a>
-                        <a href="/contact" class="nav-link">Contact</a>
+                        <a href="/milestones" class="nav-link">Sejarah</a>
+                        <a href="/line-of-business" class="nav-link">Lini Bisnis</a>
+                        <a href="/contact" class="nav-link">Kontak</a>
                     </div>
                 </div>
                 
@@ -68,11 +68,11 @@
         <!-- Mobile menu -->
         <div class="hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50">Home</a>
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50">Beranda</a>
                 <a href="/visi-misi" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Visi & Misi</a>
-                <a href="/milestones" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Milestones</a>
-                <a href="/line-of-business" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Line of Business</a>
-                <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+                <a href="/milestones" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Sejarah</a>
+                <a href="/line-of-business" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Lini Bisnis</a>
+                <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Kontak</a>
             </div>
         </div>
     </nav>
@@ -103,7 +103,7 @@
             <div class="text-center max-w-4xl mx-auto">
                 <!-- Professional Badge -->
                 <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-6">
-                    <span class="text-white font-medium">Excellence in Engineering</span>
+                    <span class="text-white font-medium">Excellence in Engineering test</span>
                 </div>
                 
                 <h1 class="text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-6 animate-fade-in-up">
@@ -117,13 +117,13 @@
                 <!-- CTA Buttons -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animate-delay-300">
                     <a href="/contact" class="btn bg-white text-blue-900 hover:bg-gray-100 text-lg px-8 py-4 shadow-lg">
-                        <span class="mr-2">Get Started</span>
+                        <span class="mr-2">Mulai Sekarang</span>
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </a>
                     <a href="#divisions" class="btn bg-transparent text-white border-2 border-white hover:bg-white hover:text-blue-900 text-lg px-8 py-4">
-                        Explore Services
+                        Jelajahi Layanan
                     </a>
                 </div>
                 
@@ -134,19 +134,19 @@
                             <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                             <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.5a1 1 0 000-2H9a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 011-1h.01a1 1 0 110 2H8a1 1 0 01-1-1zm0 3a1 1 0 011-1h.01a1 1 0 110 2H8a1 1 0 01-1-1zm0 3a1 1 0 011-1h.01a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd"/>
                         </svg>
-                        <span>25+ Years Experience</span>
+                        <span>Sejak 2013</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
                         </svg>
-                        <span>500+ Happy Clients</span>
+                        <span>500+ Klien Puas</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
-                        <span>ISO 9001 Certified</span>
+                        <span>Bersertifikat</span>
                     </div>
                 </div>
             </div>
@@ -221,7 +221,7 @@
     </section>
     @endif
 
-    <!-- About Section -->
+    <!-- Bagian Tentang Kami -->
     @if($about_snippet)
     <section class="about section relative overflow-hidden bg-gray-50">
         <div class="container-custom relative z-10">
@@ -229,7 +229,7 @@
                 <div class="inline-block mb-4">
                     <span class="text-blue-600 font-semibold uppercase tracking-wider text-sm">Who We Are</span>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-gray-900">About Us</h2>
+                <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-gray-900">Tentang Kami</h2>
                 <p class="text-lg md:text-xl text-dark-600 leading-relaxed">
                     {{ $about_snippet }}
                 </p>
@@ -263,40 +263,43 @@
     <section id="divisions" class="divisions section bg-white">
         <div class="container-custom">
             <div class="text-center mb-12">
-                <span class="text-blue-600 font-semibold uppercase tracking-wider text-sm">What We Do</span>
-                <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-4 text-gray-900">Our Divisions</h2>
-                <p class="text-dark-600 text-lg max-w-2xl mx-auto">Explore our specialized divisions delivering excellence across industries</p>
+                <span class="text-blue-600 font-semibold uppercase tracking-wider text-sm">Layanan Kami</span>
+                <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-4 text-gray-900">Divisi Kami</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Jelajahi divisi khusus kami yang memberikan keunggulan di berbagai industri</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach($divisions as $index => $division)
-                    <div class="group card card-hover bg-white border border-gray-200 relative overflow-hidden" style="animation-delay: {{ $index * 100 }}ms">
-                        <!-- Icon/Number -->
-                        <div class="absolute top-6 right-6 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-md group-hover:scale-110 transition-transform">
-                            {{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}
-                        </div>
-                        
-                        <div class="relative p-8">
-                            <h3 class="text-2xl font-heading font-semibold mb-3 text-dark-800 group-hover:text-primary-600 transition-colors">
-                                {{ $division->name }}
-                            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                @foreach($divisions->take(6) as $index => $division)
+                    <div class="group card card-hover bg-white border border-gray-200 relative overflow-hidden rounded-lg" style="animation-delay: {{ $index * 100 }}ms">
+                        <div class="flex">
+                            <!-- Number Section -->
+                            <div class="flex-shrink-0 w-20 bg-gradient-to-b from-blue-600 to-blue-700 flex items-center justify-center">
+                                <span class="text-3xl font-bold text-white">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                            </div>
                             
-                            @if($division->description)
-                                <p class="text-dark-600 leading-relaxed mb-6">
-                                    {{ Str::limit($division->description, 120) }}
-                                </p>
-                            @endif
-                            
-                            <a href="{{ route('divisions.show', $division->slug) }}" class="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-all group-hover:translate-x-2">
-                                <span>Learn More</span>
-                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                            </a>
+                            <!-- Content Section -->
+                            <div class="flex-1 p-6">
+                                <h3 class="text-xl font-heading font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                    {{ $division->name }}
+                                </h3>
+                                
+                                @if($division->description)
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                                        {{ $division->description }}
+                                    </p>
+                                @endif
+                                
+                                <a href="{{ route('divisions.show', $division->slug) }}" class="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-700 transition-all group-hover:translate-x-1">
+                                    <span>Selengkapnya</span>
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                         
                         <!-- Bottom Border Accent -->
-                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                     </div>
                 @endforeach
             </div>
@@ -309,9 +312,9 @@
     <section class="milestones section relative bg-gray-50">
         <div class="container-custom">
             <div class="text-center mb-12">
-                <span class="text-blue-600 font-semibold uppercase tracking-wider text-sm">Our History</span>
-                <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-4 text-gray-900">Milestones & Achievements</h2>
-                <p class="text-gray-600 text-lg max-w-2xl mx-auto">A journey of innovation and excellence</p>
+                <span class="text-blue-600 font-semibold uppercase tracking-wider text-sm">Sejarah Kami</span>
+                <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-4 text-gray-900">Pencapaian & Prestasi</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Perjalanan inovasi dan keunggulan kami</p>
             </div>
             
             <div class="max-w-4xl mx-auto">
@@ -349,7 +352,7 @@
         <div class="container-custom">
             <div class="text-center mb-12">
                 <span class="text-blue-600 font-semibold uppercase tracking-wider text-sm">Trusted By</span>
-                <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-4 text-gray-900">Our Valued Clients</h2>
+                <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-4 text-gray-900">Klien Kami</h2>
                 <p class="text-dark-600 text-lg max-w-2xl mx-auto">Proud to work with industry leaders</p>
             </div>
             
@@ -390,7 +393,7 @@
                 </div>
                 
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-6">
-                    Ready to Transform Your Business?
+                    Siap Mentransformasi Bisnis Anda?
                 </h2>
                 <p class="text-xl md:text-2xl text-white/90 mb-10">
                     Let's discuss how we can help you achieve your goals and drive innovation.
@@ -398,7 +401,7 @@
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="/contact" class="btn bg-white text-blue-900 hover:bg-gray-100 text-lg px-10 py-4 shadow-lg transform hover:scale-105">
-                        <span class="mr-2">Start Your Project</span>
+                        <span class="mr-2">Mulai Proyek Anda</span>
                         <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
@@ -407,7 +410,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                         </svg>
-                        Call Us Now
+                        Hubungi Kami
                     </a>
                 </div>
             </div>

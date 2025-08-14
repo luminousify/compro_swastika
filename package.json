@@ -9,6 +9,7 @@
         "performance:check": "npm run lighthouse"
     },
     "devDependencies": {
+        "@anthropic-ai/claude-code": "^1.0.72",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",

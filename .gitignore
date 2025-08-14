@@ -35,4 +35,4 @@ Thumbs.db
 /cache
 /bootstrap/cache/*.php
 *.sqlite
-*.sqlite-journal
+*.sqlite-journalerror_log

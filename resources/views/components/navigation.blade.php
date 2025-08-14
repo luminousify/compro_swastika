@@ -14,11 +14,11 @@
             <!-- Desktop Navigation -->
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-6">
-                    <a href="/" class="nav-link {{ $active === 'home' ? 'nav-link-active' : '' }}">Home</a>
+                    <a href="/" class="nav-link {{ $active === 'home' ? 'nav-link-active' : '' }}">Beranda</a>
                     <a href="/visi-misi" class="nav-link {{ $active === 'visi-misi' ? 'nav-link-active' : '' }}">Visi & Misi</a>
-                    <a href="/milestones" class="nav-link {{ $active === 'milestones' ? 'nav-link-active' : '' }}">Milestones</a>
-                    <a href="/line-of-business" class="nav-link {{ $active === 'divisions' ? 'nav-link-active' : '' }}">Line of Business</a>
-                    <a href="/contact" class="nav-link {{ $active === 'contact' ? 'nav-link-active' : '' }}">Contact</a>
+                    <a href="/milestones" class="nav-link {{ $active === 'milestones' ? 'nav-link-active' : '' }}">Sejarah</a>
+                    <a href="/line-of-business" class="nav-link {{ $active === 'divisions' ? 'nav-link-active' : '' }}">Lini Bisnis</a>
+                    <a href="/contact" class="nav-link {{ $active === 'contact' ? 'nav-link-active' : '' }}">Kontak</a>
                 </div>
             </div>
             
@@ -37,11 +37,11 @@
     <!-- Mobile menu -->
     <div class="hidden md:hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Home</a>
+            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Beranda</a>
             <a href="/visi-misi" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'visi-misi' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Visi & Misi</a>
-            <a href="/milestones" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'milestones' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Milestones</a>
-            <a href="/line-of-business" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'divisions' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Line of Business</a>
-            <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'contact' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Contact</a>
+            <a href="/milestones" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'milestones' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Sejarah</a>
+            <a href="/line-of-business" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'divisions' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Lini Bisnis</a>
+            <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium {{ $active === 'contact' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">Kontak</a>
         </div>
     </div>
 </nav>

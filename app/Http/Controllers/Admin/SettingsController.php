@@ -165,10 +165,9 @@ class SettingsController extends Controller
         if ($request->filled('longitude')) $data['google_maps']['longitude'] = $request->longitude;
         
         // Update SEO
-        if (!isset($data['seo'])) $data['seo'] = [];
-        if ($request->filled('seo_default_title')) $data['seo']['default_title'] = $request->seo_default_title;
-        if ($request->filled('seo_default_description')) $data['seo']['default_description'] = $request->seo_default_description;
-        if ($request->filled('seo_default_keywords')) $data['seo']['default_keywords'] = $request->seo_default_keywords;
+        if ($request->filled('seo_default_title')) $data['seo_title'] = $request->seo_default_title;
+        if ($request->filled('seo_default_description')) $data['seo_description'] = $request->seo_default_description;
+        if ($request->filled('seo_default_keywords')) $data['seo_keywords'] = $request->seo_default_keywords;
         
         // Save settings
         $settings->data = $data;

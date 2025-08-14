@@ -1,14 +1,14 @@
 @extends('layouts.public', ['active' => 'contact'])
 
-@section('title', $seo['title'] ?? 'Contact Us')
+@section('title', $seo['title'] ?? 'Hubungi Kami')
 @section('description', $seo['description'] ?? '')
 
 @section('content')
     <!-- Hero Section -->
     <section class="bg-blue-900 text-white py-16">
         <div class="container-custom">
-            <h1 class="text-4xl md:text-5xl font-heading font-bold text-center">Contact Us</h1>
-            <p class="text-center text-blue-200 mt-4 max-w-2xl mx-auto">We're here to help and answer any questions you might have. We look forward to hearing from you.</p>
+            <h1 class="text-4xl md:text-5xl font-heading font-bold text-center">Hubungi Kami</h1>
+            <p class="text-center text-blue-200 mt-4 max-w-2xl mx-auto">Kami siap membantu dan menjawab pertanyaan Anda. Kami menantikan kabar dari Anda.</p>
         </div>
     </section>
     
@@ -18,7 +18,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <!-- Contact Information -->
                 <div>
-                    <h2 class="text-3xl font-heading font-bold text-gray-900 mb-8">Get in Touch</h2>
+                    <h2 class="text-3xl font-heading font-bold text-gray-900 mb-8">Hubungi Kami</h2>
                     
                     <div class="space-y-6">
                         @if($contact['company_name'])
@@ -27,7 +27,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                 </svg>
                                 <div>
-                                    <h3 class="font-semibold text-gray-800 mb-1">Company</h3>
+                                    <h3 class="font-semibold text-gray-800 mb-1">Perusahaan</h3>
                                     <p class="text-gray-600">{{ $contact['company_name'] }}</p>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                                 <div>
-                                    <h3 class="font-semibold text-gray-800 mb-1">Address</h3>
+                                    <h3 class="font-semibold text-gray-800 mb-1">Alamat</h3>
                                     <p class="text-gray-600">{{ $contact['address'] }}</p>
                                 </div>
                             </div>
