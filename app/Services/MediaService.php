@@ -13,11 +13,24 @@ use Exception;
 
 class MediaService
 {
-    private ImageManager $imageManager;
+    private ?ImageManager $imageManager;
     
     public function __construct()
     {
-        $this->imageManager = new ImageManager(new Driver());
+        // Check if GD extension is available
+        if (!extension_loaded('gd')) {
+            // Log warning but don't throw exception to allow admin access
+            error_log('Warning: GD PHP extension not available. Image processing will be disabled.');
+            $this->imageManager = null;
+            return;
+        }
+        
+        try {
+            $this->imageManager = new ImageManager(new Driver());
+        } catch (Exception $e) {
+            error_log('Warning: Failed to initialize image manager: ' . $e->getMessage());
+            $this->imageManager = null;
+        }
     }
 
     /**
@@ -25,6 +38,16 @@ class MediaService
      */
     public function uploadImage(UploadedFile $file, $entity, string $type = 'general'): Media
     {
+        // Increase memory limit for image processing
+        $originalMemoryLimit = ini_get('memory_limit');
+        ini_set('memory_limit', '256M');
+        
+        try {
+            // Check if image manager is available
+            if ($this->imageManager === null) {
+                throw new Exception('Image processing is not available. Please enable GD extension or use Laragon\'s Apache server.');
+            }
+        
         // Validate image requirements
         $this->validateImageRequirements($file, $type);
         
@@ -46,25 +69,39 @@ class MediaService
         // Store original processed image
         $this->storeImageWithFallback($originalPath, $image->encode());
         
+        // Get dimensions before clearing image from memory
+        $width = $image->width();
+        $height = $image->height();
+        
         // Create responsive variants
         $this->createResponsiveVariants($image, $directory, pathinfo($hashedFilename, PATHINFO_FILENAME));
         
-        // Generate WebP version
+        // Clear image from memory to free up resources
+        $image = null;
+        if (function_exists('gc_collect_cycles')) {
+            gc_collect_cycles();
+        }
+        
+        // Generate WebP version (loads image fresh from disk)
         $this->generateWebP($originalPath);
         
-        // Create media record
-        return Media::create([
-            'mediable_type' => get_class($entity),
-            'mediable_id' => $entity->id,
-            'type' => MediaType::IMAGE,
-            'path_or_embed' => $originalPath,
-            'caption' => $file->getClientOriginalName(),
-            'width' => $image->width(),
-            'height' => $image->height(),
-            'bytes' => $file->getSize(),
-            'order' => $this->getNextOrder($entity),
-            'uploaded_by' => auth()->id(),
-        ]);
+            // Create media record
+            return Media::create([
+                'mediable_type' => get_class($entity),
+                'mediable_id' => $entity->id,
+                'type' => MediaType::IMAGE,
+                'path_or_embed' => $originalPath,
+                'caption' => $file->getClientOriginalName(),
+                'width' => $width,
+                'height' => $height,
+                'bytes' => $file->getSize(),
+                'order' => $this->getNextOrder($entity),
+                'uploaded_by' => auth()->id(),
+            ]);
+        } finally {
+            // Reset memory limit
+            ini_set('memory_limit', $originalMemoryLimit);
+        }
     }
 
     /**
@@ -170,19 +207,24 @@ class MediaService
             throw new Exception('Image dimensions must not exceed 4096×4096 pixels');
         }
         
-        // Minimum width for hero/slider images
-        if (in_array($type, ['hero', 'slider']) && $image->width() < 1200) {
-            throw new Exception('Hero and slider images must be at least 1200px wide');
+        // Minimum width requirement
+        // Slider images need to be wide for proper display, hero images more flexible
+        if ($type === 'slider' && $image->width() < 1200) {
+            throw new Exception('Slider images must be at least 1200px wide');
+        }
+        if ($type === 'hero' && $image->width() < 800) {
+            throw new Exception('Hero images must be at least 800px wide');
         }
         
-        // Aspect ratio validation for hero/slider images (16:9 ±10%)
-        if (in_array($type, ['hero', 'slider'])) {
+        // Aspect ratio validation only for slider images (16:9 ±10%)
+        // Hero images for divisions are more flexible to allow various compositions
+        if (in_array($type, ['slider'])) {
             $aspectRatio = $image->width() / $image->height();
             $targetRatio = 16 / 9; // 1.777...
             $tolerance = 0.1;
             
             if (abs($aspectRatio - $targetRatio) > ($targetRatio * $tolerance)) {
-                throw new Exception('Hero and slider images must have a 16:9 aspect ratio (±10% tolerance)');
+                throw new Exception('Slider images must have a 16:9 aspect ratio (±10% tolerance)');
             }
         }
     }

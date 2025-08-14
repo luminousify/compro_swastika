@@ -20,7 +20,7 @@
                     <div class="group bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300">
                         @if($division->media->first())
                             <div class="aspect-16-9 overflow-hidden bg-gray-100">
-                                <img src="{{ Storage::url($division->media->first()->file_path) }}" 
+                                <img src="{{ $division->media->first()->url }}" 
                                      alt="{{ $division->name }}" 
                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             </div>

@@ -5,30 +5,42 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="bg-blue-900 text-white py-16">
-        <div class="container-custom">
-            <div class="flex items-center justify-center mb-4">
+    <section class="relative py-20 md:py-32 overflow-hidden @if($division->media->first()) bg-gray-900 @else bg-blue-900 @endif text-white">
+        @if($division->media->first())
+            <!-- Hero Background Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="{{ $division->media->first()->url }}" 
+                     alt="{{ $division->name }}" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            </div>
+        @endif
+        
+        <!-- Hero Content -->
+        <div class="container-custom relative z-10">
+            <div class="flex items-center justify-center mb-6">
                 <a href="/line-of-business" class="text-blue-200 hover:text-white mr-2">Line of Business</a>
                 <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
                 <span class="ml-2">{{ $division->name }}</span>
             </div>
-            <h1 class="text-4xl md:text-5xl font-heading font-bold text-center">{{ $division->name }}</h1>
+            <h1 class="text-4xl md:text-6xl font-heading font-bold text-center mb-6">{{ $division->name }}</h1>
             @if($division->description)
-                <p class="text-center text-blue-200 mt-4 max-w-3xl mx-auto">{{ $division->description }}</p>
+                <p class="text-center text-gray-200 text-lg md:text-xl mt-6 max-w-4xl mx-auto leading-relaxed">{{ $division->description }}</p>
             @endif
         </div>
     </section>
 
-    <!-- Media Gallery -->
-    @if($division->media->count() > 0)
-        <section class="py-8 bg-gray-50">
+    <!-- Additional Media Gallery -->
+    @if($division->media->count() > 1)
+        <section class="py-12 bg-gray-50">
             <div class="container-custom">
+                <h2 class="text-2xl font-heading font-bold text-gray-900 text-center mb-8">Gallery</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    @foreach($division->media as $media)
+                    @foreach($division->media->skip(1) as $media)
                         <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                            <img src="{{ Storage::url($media->file_path) }}" 
+                            <img src="{{ $media->url }}" 
                                  alt="{{ $media->caption ?? $division->name }}" 
                                  class="w-full h-64 object-cover">
                             @if($media->caption)
