@@ -123,100 +123,109 @@
                         </div>
                     @endif
                     
-                    <form method="POST" action="{{ route('contact.store') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('contact.store') }}" class="space-y-8" novalidate>
                         @csrf
                         
                         <!-- Honeypot field for spam protection -->
                         <input type="text" name="website" style="display: none;" tabindex="-1" autocomplete="off">
                         
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                                Full Name *
-                            </label>
+                        <div class="form-group">
+                            <label for="name" class="form-label required">Full Name</label>
                             <input 
                                 type="text" 
                                 id="name" 
                                 name="name" 
                                 value="{{ old('name') }}"
                                 required
-                                aria-required="true"
-                                aria-label="Full Name"
-                                @error('name') aria-describedby="name-error" @enderror
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-500 @enderror"
-                                placeholder="Your full name">
+                                maxlength="255"
+                                autocomplete="name"
+                                class="form-input @error('name') error @enderror"
+                                placeholder="Enter your full name"
+                                aria-describedby="name-help @error('name') name-error @enderror"
+                                @error('name') aria-invalid="true" @enderror>
+                            <div id="name-help" class="form-help">
+                                We'll use this to address you personally in our response
+                            </div>
                             @error('name')
-                                <p id="name-error" class="mt-1 text-sm text-red-600" role="alert">{{ $message }}</p>
+                                <div id="name-error" class="form-error" role="alert">{{ $message }}</div>
                             @enderror
                         </div>
                         
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                                Email Address *
-                            </label>
+                        <div class="form-group">
+                            <label for="email" class="form-label required">Email Address</label>
                             <input 
                                 type="email" 
                                 id="email" 
                                 name="email" 
                                 value="{{ old('email') }}"
                                 required
-                                aria-required="true"
-                                aria-label="Email Address"
-                                @error('email') aria-describedby="email-error" @enderror
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('email') border-red-500 @enderror"
-                                placeholder="your.email@example.com">
+                                maxlength="255"
+                                autocomplete="email"
+                                class="form-input @error('email') error @enderror"
+                                placeholder="your.email@example.com"
+                                aria-describedby="email-help @error('email') email-error @enderror"
+                                @error('email') aria-invalid="true" @enderror>
+                            <div id="email-help" class="form-help">
+                                We'll use this to send you our response. Your email is kept private.
+                            </div>
                             @error('email')
-                                <p id="email-error" class="mt-1 text-sm text-red-600" role="alert">{{ $message }}</p>
+                                <div id="email-error" class="form-error" role="alert">{{ $message }}</div>
                             @enderror
                         </div>
                         
-                        <div>
-                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">
-                                Subject *
-                            </label>
+                        <div class="form-group">
+                            <label for="subject" class="form-label required">Subject</label>
                             <input 
                                 type="text" 
                                 id="subject" 
                                 name="subject" 
                                 value="{{ old('subject') }}"
                                 required
-                                aria-required="true"
-                                aria-label="Subject"
-                                @error('subject') aria-describedby="subject-error" @enderror
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('subject') border-red-500 @enderror"
-                                placeholder="What is this about?">
+                                maxlength="255"
+                                class="form-input @error('subject') error @enderror"
+                                placeholder="What can we help you with?"
+                                aria-describedby="subject-help @error('subject') subject-error @enderror"
+                                @error('subject') aria-invalid="true" @enderror>
+                            <div id="subject-help" class="form-help">
+                                A brief summary of your inquiry
+                            </div>
                             @error('subject')
-                                <p id="subject-error" class="mt-1 text-sm text-red-600" role="alert">{{ $message }}</p>
+                                <div id="subject-error" class="form-error" role="alert">{{ $message }}</div>
                             @enderror
                         </div>
                         
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
-                                Message *
-                            </label>
+                        <div class="form-group">
+                            <label for="message" class="form-label required">Message</label>
                             <textarea 
                                 id="message" 
                                 name="message" 
-                                rows="5" 
+                                rows="6" 
                                 required
-                                aria-required="true"
-                                aria-label="Message"
-                                @error('message') aria-describedby="message-error" @enderror
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('message') border-red-500 @enderror"
-                                placeholder="Tell us more about your inquiry...">{{ old('message') }}</textarea>
+                                maxlength="5000"
+                                class="form-textarea @error('message') error @enderror"
+                                placeholder="Please provide detailed information about your inquiry, including any specific requirements or questions you may have..."
+                                aria-describedby="message-help @error('message') message-error @enderror"
+                                @error('message') aria-invalid="true" @enderror>{{ old('message') }}</textarea>
+                            <div id="message-help" class="form-help">
+                                Tell us more about your inquiry. The more details you provide, the better we can help you. Maximum 5000 characters.
+                            </div>
                             @error('message')
-                                <p id="message-error" class="mt-1 text-sm text-red-600" role="alert">{{ $message }}</p>
+                                <div id="message-error" class="form-error" role="alert">{{ $message }}</div>
                             @enderror
                         </div>
                         
-                        <div>
+                        <div class="pt-4">
                             <button 
                                 type="submit" 
-                                class="w-full btn btn-primary justify-center">
-                                <span class="mr-2">Send Message</span>
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="btn btn-primary w-full text-lg py-4">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
+                                Send Message
                             </button>
+                            <p class="text-center text-sm text-gray-500 mt-4">
+                                We typically respond within 24 hours during business days
+                            </p>
                         </div>
                     </form>
                 </div>

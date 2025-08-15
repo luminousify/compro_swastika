@@ -1,82 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://dayaswas.idweb.host/</loc>
+    <loc>http://localhost:8000/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://dayaswas.idweb.host/visi-misi</loc>
+    <loc>http://localhost:8000/visi-misi</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://dayaswas.idweb.host/milestones</loc>
+    <loc>http://localhost:8000/milestones</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://dayaswas.idweb.host/line-of-business</loc>
+    <loc>http://localhost:8000/line-of-business</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://dayaswas.idweb.host/contact</loc>
+    <loc>http://localhost:8000/contact</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/grundfos-pump</loc>
+    <loc>http://localhost:8000/line-of-business/adhesive</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/automotive-parts</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/fabrication-automation</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/business-consulting</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/gps-fleet</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/advertising-printing</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/injection-stamping-dan-machining</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/adhesive</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
-  </url>
-  <url>
-    <loc>https://dayaswas.idweb.host/line-of-business/chemical-product</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-14</lastmod>
   </url>
 </urlset>

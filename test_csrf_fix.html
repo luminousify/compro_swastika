@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSRF Fix Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-step { background: #f0f8ff; padding: 15px; margin: 10px 0; border-left: 4px solid #007cba; }
+        .result { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        button { background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #005a87; }
+    </style>
+</head>
+<body>
+    <h1>CSRF Token Fix Test</h1>
+    
+    <div class="test-step">
+        <h3>Step 1: Basic Connectivity Test</h3>
+        <button onclick="testConnectivity()">Test Server Connection</button>
+        <div id="connectivity-result"></div>
+    </div>
+
+    <div class="test-step">
+        <h3>Step 2: Test Normal Login</h3>
+        <p>Open <a href="http://127.0.0.1:8000/login" target="_blank">Login Page</a> and try logging in normally first.</p>
+        <p>Credentials: admin@dsp.com / admin123</p>
+    </div>
+
+    <div class="test-step">
+        <h3>Step 3: Test CSRF Token Handling</h3>
+        <button onclick="testCSRFHandling()">Test CSRF Error Handling</button>
+        <div id="csrf-result"></div>
+    </div>
+
+    <div class="test-step">
+        <h3>Step 4: Manual CSRF Expiration Test</h3>
+        <ol>
+            <li>Open <a href="http://127.0.0.1:8000/login" target="_blank">Login Page</a> in a new tab</li>
+            <li>Open Developer Tools (F12) → Application tab → Cookies</li>
+            <li>Delete all cookies for this domain</li>
+            <li>Return to login page and submit valid credentials</li>
+            <li>Watch Network tab - should see automatic refresh on 419 error</li>
+        </ol>
+        <div id="manual-result">
+            <button onclick="logManualResult(true)">✅ Test Passed - Auto-refresh worked</button>
+            <button onclick="logManualResult(false)">❌ Test Failed - No auto-refresh</button>
+        </div>
+    </div>
+
+    <script>
+        async function testConnectivity() {
+            const resultDiv = document.getElementById('connectivity-result');
+            try {
+                const response = await fetch('http://127.0.0.1:8000/health');
+                if (response.ok) {
+                    resultDiv.innerHTML = '<div class="result success">✅ Server is running and accessible</div>';
+                } else {
+                    resultDiv.innerHTML = '<div class="result error">❌ Server responded with status: ' + response.status + '</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="result error">❌ Cannot connect to server: ' + error.message + '</div>';
+            }
+        }
+
+        async function testCSRFHandling() {
+            const resultDiv = document.getElementById('csrf-result');
+            resultDiv.innerHTML = '<div class="result">Testing CSRF handling...</div>';
+            
+            try {
+                // First get the login page to check CSRF token presence
+                const loginResponse = await fetch('http://127.0.0.1:8000/login');
+                const loginHtml = await loginResponse.text();
+                
+                if (loginHtml.includes('_token')) {
+                    resultDiv.innerHTML = '<div class="result success">✅ CSRF token found in login form</div>';
+                } else {
+                    resultDiv.innerHTML = '<div class="result error">❌ CSRF token not found in login form</div>';
+                }
+                
+                // Test invalid CSRF submission
+                const formData = new FormData();
+                formData.append('_token', 'invalid_token_12345');
+                formData.append('email', 'admin@dsp.com');
+                formData.append('password', 'admin123');
+                
+                const submitResponse = await fetch('http://127.0.0.1:8000/login', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (submitResponse.status === 419) {
+                    resultDiv.innerHTML += '<div class="result success">✅ Server correctly returns 419 for invalid CSRF token</div>';
+                } else {
+                    resultDiv.innerHTML += '<div class="result error">❌ Server did not return 419 for invalid CSRF token (got: ' + submitResponse.status + ')</div>';
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="result error">❌ Error testing CSRF: ' + error.message + '</div>';
+            }
+        }
+
+        function logManualResult(passed) {
+            const resultDiv = document.getElementById('manual-result');
+            if (passed) {
+                resultDiv.innerHTML = '<div class="result success">✅ Manual test passed - CSRF auto-refresh is working correctly!</div>';
+            } else {
+                resultDiv.innerHTML = '<div class="result error">❌ Manual test failed - CSRF auto-refresh is not working. Check console for errors.</div>';
+            }
+        }
+
+        // Auto-run connectivity test on page load
+        window.onload = function() {
+            testConnectivity();
+        };
+    </script>
+</body>
+</html>

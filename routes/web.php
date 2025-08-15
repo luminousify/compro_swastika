@@ -4,9 +4,12 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DivisionController;
+use App\Http\Controllers\Admin\MachineController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\MilestoneController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -70,6 +73,33 @@ Route::middleware(['auth', 'force.password.change'])->prefix('admin')->name('adm
         Route::post('/divisions/reorder', [DivisionController::class, 'reorder'])->name('divisions.reorder');
         Route::resource('divisions', DivisionController::class);
         
+        // Product management
+        Route::post('/divisions/{division}/products/reorder', [ProductController::class, 'reorder'])->name('products.reorder');
+        Route::get('/divisions/{division}/products', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/divisions/{division}/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/divisions/{division}/products', [ProductController::class, 'store'])->name('products.store');
+        Route::get('/divisions/{division}/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/divisions/{division}/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/divisions/{division}/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        
+        // Technology management
+        Route::post('/divisions/{division}/technologies/reorder', [TechnologyController::class, 'reorder'])->name('technologies.reorder');
+        Route::get('/divisions/{division}/technologies', [TechnologyController::class, 'index'])->name('technologies.index');
+        Route::get('/divisions/{division}/technologies/create', [TechnologyController::class, 'create'])->name('technologies.create');
+        Route::post('/divisions/{division}/technologies', [TechnologyController::class, 'store'])->name('technologies.store');
+        Route::get('/divisions/{division}/technologies/{technology}/edit', [TechnologyController::class, 'edit'])->name('technologies.edit');
+        Route::put('/divisions/{division}/technologies/{technology}', [TechnologyController::class, 'update'])->name('technologies.update');
+        Route::delete('/divisions/{division}/technologies/{technology}', [TechnologyController::class, 'destroy'])->name('technologies.destroy');
+        
+        // Machine management
+        Route::post('/divisions/{division}/machines/reorder', [MachineController::class, 'reorder'])->name('machines.reorder');
+        Route::get('/divisions/{division}/machines', [MachineController::class, 'index'])->name('machines.index');
+        Route::get('/divisions/{division}/machines/create', [MachineController::class, 'create'])->name('machines.create');
+        Route::post('/divisions/{division}/machines', [MachineController::class, 'store'])->name('machines.store');
+        Route::get('/divisions/{division}/machines/{machine}/edit', [MachineController::class, 'edit'])->name('machines.edit');
+        Route::put('/divisions/{division}/machines/{machine}', [MachineController::class, 'update'])->name('machines.update');
+        Route::delete('/divisions/{division}/machines/{machine}', [MachineController::class, 'destroy'])->name('machines.destroy');
+        
         // Media management
         Route::post('/media/bulk', [MediaController::class, 'bulkUpload'])->name('media.bulk');
         Route::post('/media/reorder', [MediaController::class, 'reorder'])->name('media.reorder');
@@ -114,6 +144,7 @@ Route::get('/health', function () {
         'timestamp' => now()->toDateTimeString(),
     ]);
 })->name('health');
+
 
 Route::get('/version', function () {
     $versionFile = base_path('VERSION');

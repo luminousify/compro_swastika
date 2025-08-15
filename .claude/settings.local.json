@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo $APPDATA)",
+      "Bash(npm search:*)",
+      "Bash(npm install:*)",
+      "Bash(php artisan route:list:*)",
+      "Bash(php artisan config:clear:*)",
+      "Bash(php artisan:*)",
+      "Bash(sqlite3:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

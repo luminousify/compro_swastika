@@ -67,12 +67,12 @@
         <div id="products-content" class="tab-content">
             <div class="mb-4 flex justify-between items-center">
                 <h2 class="text-lg font-medium text-gray-900">Products</h2>
-                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                <a href="{{ route('admin.products.create', $division) }}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                     <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                     Add Product
-                </button>
+                </a>
             </div>
             
             @if($products->count() > 0)
@@ -81,12 +81,15 @@
                         @foreach($products as $product)
                             <li class="px-6 py-4 hover:bg-gray-50">
                                 <div class="flex items-center justify-between">
-                                    <div>
+                                    <div class="flex-1">
                                         <p class="text-sm font-medium text-gray-900">{{ $product->name }}</p>
                                         <p class="text-sm text-gray-500">{{ Str::limit($product->description, 100) }}</p>
                                     </div>
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs text-gray-500">Order: {{ $product->order }}</span>
+                                        <a href="{{ route('admin.products.edit', [$division, $product]) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                                            Edit
+                                        </a>
                                     </div>
                                 </div>
                             </li>
@@ -110,12 +113,12 @@
         <div id="technologies-content" class="tab-content hidden">
             <div class="mb-4 flex justify-between items-center">
                 <h2 class="text-lg font-medium text-gray-900">Technologies</h2>
-                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                <a href="{{ route('admin.technologies.create', $division) }}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                     <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                     Add Technology
-                </button>
+                </a>
             </div>
             
             @if($technologies->count() > 0)
@@ -124,12 +127,15 @@
                         @foreach($technologies as $technology)
                             <li class="px-6 py-4 hover:bg-gray-50">
                                 <div class="flex items-center justify-between">
-                                    <div>
+                                    <div class="flex-1">
                                         <p class="text-sm font-medium text-gray-900">{{ $technology->name }}</p>
                                         <p class="text-sm text-gray-500">{{ Str::limit($technology->description, 100) }}</p>
                                     </div>
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs text-gray-500">Order: {{ $technology->order }}</span>
+                                        <a href="{{ route('admin.technologies.edit', [$division, $technology]) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                                            Edit
+                                        </a>
                                     </div>
                                 </div>
                             </li>
@@ -153,12 +159,12 @@
         <div id="machines-content" class="tab-content hidden">
             <div class="mb-4 flex justify-between items-center">
                 <h2 class="text-lg font-medium text-gray-900">Machines</h2>
-                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                <a href="{{ route('admin.machines.create', $division) }}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                     <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                     Add Machine
-                </button>
+                </a>
             </div>
             
             @if($machines->count() > 0)
@@ -167,12 +173,15 @@
                         @foreach($machines as $machine)
                             <li class="px-6 py-4 hover:bg-gray-50">
                                 <div class="flex items-center justify-between">
-                                    <div>
+                                    <div class="flex-1">
                                         <p class="text-sm font-medium text-gray-900">{{ $machine->name }}</p>
-                                        <p class="text-sm text-gray-500">{{ $machine->specifications }}</p>
+                                        <p class="text-sm text-gray-500">{{ Str::limit($machine->description, 100) }}</p>
                                     </div>
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs text-gray-500">Order: {{ $machine->order }}</span>
+                                        <a href="{{ route('admin.machines.edit', [$division, $machine]) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                                            Edit
+                                        </a>
                                     </div>
                                 </div>
                             </li>

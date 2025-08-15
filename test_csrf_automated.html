@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated CSRF Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-step { margin: 15px 0; padding: 15px; border-radius: 8px; border-left: 4px solid #ddd; }
+        .test-step.running { border-color: #ffa500; background: #fff3cd; }
+        .test-step.success { border-color: #28a745; background: #d4edda; }
+        .test-step.error { border-color: #dc3545; background: #f8d7da; }
+        .test-step.pending { border-color: #6c757d; background: #f8f9fa; }
+        button { padding: 12px 24px; margin: 10px 5px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn:hover { opacity: 0.9; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .log { background: #f8f9fa; padding: 15px; border-radius: 6px; margin: 10px 0; font-family: monospace; font-size: 14px; max-height: 200px; overflow-y: auto; }
+        .result-summary { margin: 20px 0; padding: 20px; border-radius: 8px; text-align: center; }
+        .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-pending { background: #6c757d; }
+        .status-running { background: #ffa500; }
+        .status-success { background: #28a745; }
+        .status-error { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 CSRF Token Fix Automated Test</h1>
+        <p>This automated test will verify that the CSRF token handling is working correctly in your Laravel application.</p>
+        
+        <div class="test-step pending" id="step1">
+            <span class="status-indicator status-pending"></span>
+            <strong>Step 1:</strong> Server Connectivity Check
+            <div class="log" id="log1" style="display: none;"></div>
+        </div>
+        
+        <div class="test-step pending" id="step2">
+            <span class="status-indicator status-pending"></span>
+            <strong>Step 2:</strong> Get Login Page and Extract CSRF Token
+            <div class="log" id="log2" style="display: none;"></div>
+        </div>
+        
+        <div class="test-step pending" id="step3">
+            <span class="status-indicator status-pending"></span>
+            <strong>Step 3:</strong> Test Normal Login (Valid CSRF)
+            <div class="log" id="log3" style="display: none;"></div>
+        </div>
+        
+        <div class="test-step pending" id="step4">
+            <span class="status-indicator status-pending"></span>
+            <strong>Step 4:</strong> Test with Invalid CSRF Token (Simulate 419 Error)
+            <div class="log" id="log4" style="display: none;"></div>
+        </div>
+        
+        <div class="test-step pending" id="step5">
+            <span class="status-indicator status-pending"></span>
+            <strong>Step 5:</strong> Verify Auto-Refresh Behavior
+            <div class="log" id="log5" style="display: none;"></div>
+        </div>
+        
+        <div class="result-summary" id="summary" style="display: none;">
+            <h3>Test Results</h3>
+            <div id="summary-content"></div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn-primary" onclick="runTests()" id="runBtn">
+                🚀 Run CSRF Tests
+            </button>
+            <button class="btn-secondary" onclick="clearResults()" id="clearBtn">
+                🧹 Clear Results
+            </button>
+        </div>
+        
+        <div class="log" id="globalLog">
+            <strong>Test Log:</strong><br>
+            Ready to run tests. Click "Run CSRF Tests" to begin.
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:8000';
+        let testResults = {};
+        
+        function log(message, stepId = null) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}`;
+            
+            // Log to global log
+            const globalLog = document.getElementById('globalLog');
+            globalLog.innerHTML += '<br>' + logMessage;
+            globalLog.scrollTop = globalLog.scrollHeight;
+            
+            // Log to step-specific log if provided
+            if (stepId) {
+                const stepLog = document.getElementById(`log${stepId}`);
+                if (stepLog) {
+                    stepLog.style.display = 'block';
+                    stepLog.innerHTML += (stepLog.innerHTML ? '<br>' : '') + logMessage;
+                    stepLog.scrollTop = stepLog.scrollHeight;
+                }
+            }
+            
+            console.log(logMessage);
+        }
+        
+        function updateStepStatus(stepNum, status) {
+            const step = document.getElementById(`step${stepNum}`);
+            const indicator = step.querySelector('.status-indicator');
+            
+            // Remove all status classes
+            step.classList.remove('pending', 'running', 'success', 'error');
+            indicator.classList.remove('status-pending', 'status-running', 'status-success', 'status-error');
+            
+            // Add new status
+            step.classList.add(status);
+            indicator.classList.add(`status-${status}`);
+            
+            testResults[stepNum] = status;
+        }
+        
+        async function runTests() {
+            const runBtn = document.getElementById('runBtn');
+            runBtn.disabled = true;
+            runBtn.innerHTML = '<span class="spinner"></span> Running Tests...';
+            
+            log('🚀 Starting CSRF token fix tests...');
+            
+            try {
+                await testServerConnectivity();
+                await testGetLoginPage();
+                await testNormalLogin();
+                await testInvalidCSRF();
+                await testAutoRefreshBehavior();
+                
+                showSummary();
+            } catch (error) {
+                log(`❌ Test suite failed: ${error.message}`);
+            } finally {
+                runBtn.disabled = false;
+                runBtn.innerHTML = '🚀 Run CSRF Tests';
+            }
+        }
+        
+        async function testServerConnectivity() {
+            updateStepStatus(1, 'running');
+            log('🔍 Testing server connectivity...', 1);
+            
+            try {
+                const response = await fetch(`${BASE_URL}/login`, {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                });
+                
+                if (response.ok) {
+                    log('✅ Server is running and accessible', 1);
+                    updateStepStatus(1, 'success');
+                } else {
+                    throw new Error(`Server returned ${response.status}`);
+                }
+            } catch (error) {
+                log(`❌ Server connectivity failed: ${error.message}`, 1);
+                updateStepStatus(1, 'error');
+                throw error;
+            }
+        }
+        
+        async function testGetLoginPage() {
+            updateStepStatus(2, 'running');
+            log('📄 Fetching login page and extracting CSRF token...', 2);
+            
+            try {
+                const response = await fetch(`${BASE_URL}/login`, {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                });
+                
+                const html = await response.text();
+                const csrfMatch = html.match(/name="(_token|csrf-token)"\s+value="([^"]+)"/);
+                
+                if (csrfMatch) {
+                    const csrfToken = csrfMatch[2];
+                    log(`✅ CSRF token extracted: ${csrfToken.substring(0, 10)}...`, 2);
+                    updateStepStatus(2, 'success');
+                    return csrfToken;
+                } else {
+                    throw new Error('CSRF token not found in HTML');
+                }
+            } catch (error) {
+                log(`❌ Failed to get login page: ${error.message}`, 2);
+                updateStepStatus(2, 'error');
+                throw error;
+            }
+        }
+        
+        async function testNormalLogin() {
+            updateStepStatus(3, 'running');
+            log('🔑 Testing normal login with valid CSRF token...', 3);
+            
+            try {
+                // Get fresh CSRF token
+                const loginPageResponse = await fetch(`${BASE_URL}/login`, {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                });
+                
+                const html = await loginPageResponse.text();
+                const csrfMatch = html.match(/name="_token"\s+value="([^"]+)"/);
+                
+                if (!csrfMatch) {
+                    throw new Error('Could not extract CSRF token');
+                }
+                
+                const csrfToken = csrfMatch[1];
+                log(`📝 Using CSRF token: ${csrfToken.substring(0, 10)}...`, 3);
+                
+                // Create form data
+                const formData = new FormData();
+                formData.append('email', 'admin@dsp.com');
+                formData.append('password', 'admin123');
+                formData.append('_token', csrfToken);
+                
+                // Submit login
+                const response = await fetch(`${BASE_URL}/login`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    redirect: 'manual'
+                });
+                
+                log(`📊 Login response status: ${response.status}`, 3);
+                
+                if (response.status === 302 || response.status === 200) {
+                    log('✅ Normal login successful', 3);
+                    updateStepStatus(3, 'success');
+                } else if (response.status === 419) {
+                    log('⚠️  Received 419 error even with valid token (unexpected)', 3);
+                    updateStepStatus(3, 'error');
+                } else {
+                    throw new Error(`Unexpected response: ${response.status}`);
+                }
+            } catch (error) {
+                log(`❌ Normal login test failed: ${error.message}`, 3);
+                updateStepStatus(3, 'error');
+                // Don't throw - continue with other tests
+            }
+        }
+        
+        async function testInvalidCSRF() {
+            updateStepStatus(4, 'running');
+            log('🚫 Testing login with invalid CSRF token...', 4);
+            
+            try {
+                // Create form data with invalid CSRF token
+                const formData = new FormData();
+                formData.append('email', 'admin@dsp.com');
+                formData.append('password', 'admin123');
+                formData.append('_token', 'invalid_csrf_token_12345');
+                
+                // Submit login with invalid CSRF
+                const response = await fetch(`${BASE_URL}/login`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    redirect: 'manual'
+                });
+                
+                log(`📊 Invalid CSRF response status: ${response.status}`, 4);
+                
+                if (response.status === 419) {
+                    log('✅ Server correctly returned 419 for invalid CSRF token', 4);
+                    updateStepStatus(4, 'success');
+                } else {
+                    log(`⚠️  Expected 419 but got ${response.status}`, 4);
+                    updateStepStatus(4, 'error');
+                }
+            } catch (error) {
+                log(`❌ Invalid CSRF test failed: ${error.message}`, 4);
+                updateStepStatus(4, 'error');
+            }
+        }
+        
+        async function testAutoRefreshBehavior() {
+            updateStepStatus(5, 'running');
+            log('🔄 Testing auto-refresh behavior (manual verification needed)...', 5);
+            
+            try {
+                log('ℹ️  This step requires manual verification:', 5);
+                log('1. The login form JavaScript should detect 419 errors', 5);
+                log('2. It should automatically refresh the page on 419', 5);
+                log('3. Users should be able to login after refresh', 5);
+                log('', 5);
+                log('📋 To verify manually:', 5);
+                log('- Open browser dev tools → Network tab', 5);
+                log('- Clear session cookies', 5);
+                log('- Try to login and watch for 419 → page refresh', 5);
+                
+                // For automated testing, we'll mark this as success if the JavaScript code exists
+                const loginPageResponse = await fetch(`${BASE_URL}/login`);
+                const html = await loginPageResponse.text();
+                
+                const hasAutoRefreshCode = html.includes('response.status === 419') && 
+                                         html.includes('window.location.reload()');
+                
+                if (hasAutoRefreshCode) {
+                    log('✅ Auto-refresh JavaScript code found in login page', 5);
+                    updateStepStatus(5, 'success');
+                } else {
+                    log('❌ Auto-refresh JavaScript code not found', 5);
+                    updateStepStatus(5, 'error');
+                }
+                
+            } catch (error) {
+                log(`❌ Auto-refresh test failed: ${error.message}`, 5);
+                updateStepStatus(5, 'error');
+            }
+        }
+        
+        function showSummary() {
+            const summary = document.getElementById('summary');
+            const summaryContent = document.getElementById('summary-content');
+            
+            const totalTests = 5;
+            const passedTests = Object.values(testResults).filter(r => r === 'success').length;
+            const failedTests = Object.values(testResults).filter(r => r === 'error').length;
+            
+            const allPassed = failedTests === 0;
+            
+            summary.style.display = 'block';
+            summary.className = `result-summary ${allPassed ? 'test-step success' : 'test-step error'}`;
+            
+            summaryContent.innerHTML = `
+                <h4>${allPassed ? '🎉 All Tests Passed!' : '⚠️  Some Tests Failed'}</h4>
+                <p><strong>Total Tests:</strong> ${totalTests}</p>
+                <p><strong>Passed:</strong> ${passedTests}</p>
+                <p><strong>Failed:</strong> ${failedTests}</p>
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;">
+                <p><strong>CSRF Fix Status:</strong> ${allPassed ? 
+                    '✅ Implementation appears to be working correctly!' : 
+                    '❌ Issues detected - please review the failed tests'}</p>
+                ${allPassed ? 
+                    '<p><em>The automatic CSRF token refresh should provide a seamless user experience when tokens expire.</em></p>' : 
+                    '<p><em>Please review the test logs and ensure the Laravel server is running with the correct implementation.</em></p>'}
+            `;
+            
+            log(`🏁 Test completed: ${passedTests}/${totalTests} tests passed`);
+        }
+        
+        function clearResults() {
+            // Reset all steps to pending
+            for (let i = 1; i <= 5; i++) {
+                updateStepStatus(i, 'pending');
+                const log = document.getElementById(`log${i}`);
+                if (log) {
+                    log.style.display = 'none';
+                    log.innerHTML = '';
+                }
+            }
+            
+            // Clear results
+            testResults = {};
+            
+            // Hide summary
+            document.getElementById('summary').style.display = 'none';
+            
+            // Clear global log
+            document.getElementById('globalLog').innerHTML = '<strong>Test Log:</strong><br>Results cleared. Ready to run tests again.';
+            
+            log('🧹 Test results cleared. Ready for new test run.');
+        }
+        
+        // Check server status on page load
+        window.addEventListener('load', async () => {
+            log('🌐 Page loaded. Checking server status...');
+            try {
+                const response = await fetch(`${BASE_URL}/login`);
+                if (response.ok) {
+                    log('✅ Laravel server is running and accessible');
+                } else {
+                    log('⚠️  Server returned non-200 status. Check if Laravel is running.');
+                }
+            } catch (error) {
+                log('❌ Cannot connect to Laravel server. Please start with: php artisan serve');
+            }
+        });
+    </script>
+</body>
+</html>
