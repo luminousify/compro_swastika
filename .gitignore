@@ -35,4 +35,35 @@ Thumbs.db
 /cache
 /bootstrap/cache/*.php
 *.sqlite
-*.sqlite-journalerror_log
+*.sqlite-journal
+error_log
+
+# Temporary files
+*.tmp
+*.temp
+nul
+
+# Testing and debugging files
+test-*.js
+test-*.cjs
+test-*.html
+debug-*.js
+*.png
+*.jpg
+*.gif
+check-*.php
+cookies.txt
+
+# Documentation drafts (keep main docs)
+DEPLOYMENT*.md
+MANUAL_*.md
+*_prd_*.md
+*_reference.md
+
+# Deployment artifacts
+deploy_package/
+deployment/
+deploy.sh
+deploy-ftp.php
+public/build_clean/
+public/build_new/
