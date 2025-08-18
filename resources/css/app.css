@@ -531,3 +531,67 @@
     position: relative;
     z-index: 2;
 }
+
+/* Image Slider Optimizations */
+.image-slider-container {
+    @apply relative;
+}
+
+/* Swiper Container Optimizations */
+.swiper-container {
+    @apply relative overflow-hidden;
+    contain: layout style paint;
+}
+
+.swiper-wrapper {
+    @apply relative w-full h-full flex;
+    transform: translate3d(0px, 0px, 0px);
+}
+
+.swiper-slide {
+    @apply relative flex-shrink-0;
+    contain: layout style paint;
+}
+
+/* Image Performance Optimizations */
+.swiper-slide img {
+    @apply select-none pointer-events-none;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Responsive Aspect Ratios */
+@media (max-width: 640px) {
+    .aspect-responsive {
+        aspect-ratio: 4 / 3;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .aspect-responsive {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+@media (min-width: 1025px) {
+    .aspect-responsive {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+/* Navigation Button Animations */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    transform: scale(1.1);
+}
+
+/* Pagination Bullet Improvements */
+.swiper-pagination-bullet {
+    opacity: 0.7;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    transform: scale(1.25);
+}

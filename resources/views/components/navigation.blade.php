@@ -6,8 +6,10 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <div class="flex-shrink-0">
-                <a href="/" class="text-2xl font-bold text-gray-900">
-                    {{ \App\Models\Setting::getValue('company_name', 'PT. Daya Swastika Perkasa') }}
+                <a href="/" class="flex items-center">
+                    <img src="{{ Storage::url('logos/DSP Logo.png') }}" 
+                         alt="{{ \App\Models\Setting::getValue('company_name', 'PT. Daya Swastika Perkasa') }}" 
+                         class="h-10 w-auto object-contain">
                 </a>
             </div>
             

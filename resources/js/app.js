@@ -1,24 +1,45 @@
 import './bootstrap';
 import './lazy-loading';
 import { Swiper } from 'swiper';
-import { Navigation, Pagination, Autoplay, Keyboard } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay, Keyboard, EffectFade } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+
+// Configure Swiper with modules first
+Swiper.use([Navigation, Pagination, Autoplay, Keyboard, EffectFade]);
+
+// Make Swiper available globally
+window.Swiper = Swiper;
+console.log('Swiper loaded globally:', typeof window.Swiper !== 'undefined');
 
 // Initialize Swiper when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    const swiperContainer = document.querySelector('.swiper-container');
+    console.log('DOM Content Loaded - Starting slider initialization...');
     
-    if (swiperContainer) {
-        const swiper = new Swiper(swiperContainer, {
-            modules: [Navigation, Pagination, Autoplay, Keyboard],
+    // Initialize all swiper containers
+    const swiperContainers = document.querySelectorAll('.swiper-container');
+    console.log('Found', swiperContainers.length, 'slider containers');
+    
+    swiperContainers.forEach(function(swiperContainer, index) {
+        if (swiperContainer && !swiperContainer.classList.contains('swiper-initialized')) {
+            console.log('Initializing slider:', swiperContainer.id);
+            try {
+                const slideCount = swiperContainer.querySelectorAll('.swiper-slide').length;
+                const swiper = new Swiper(swiperContainer, {
+            // Modules are already registered globally
             
-            // Slider settings
-            loop: true,
+            // Slider settings - disable loop for single slides to prevent flickering
+            loop: slideCount > 1,
             centeredSlides: true,
             slidesPerView: 1,
             spaceBetween: 0,
+            speed: 600,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
             
             // Autoplay configuration
             autoplay: {
@@ -27,15 +48,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 pauseOnMouseEnter: swiperContainer.dataset.swiperPauseOnHover === 'true',
             },
             
-            // Navigation arrows
+            // Navigation arrows - target specific to this slider
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: swiperContainer.querySelector('.swiper-button-next'),
+                prevEl: swiperContainer.querySelector('.swiper-button-prev'),
             },
             
-            // Pagination
+            // Pagination - target specific to this slider
             pagination: {
-                el: '.swiper-pagination',
+                el: swiperContainer.querySelector('.swiper-pagination'),
                 clickable: true,
                 dynamicBullets: true,
             },
@@ -79,22 +100,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Add any slide change logic here if needed
                 }
             }
-        });
-        
-        // Keyboard event handling for space bar (play/pause)
-        if (swiperContainer.dataset.swiperKeyboard === 'true') {
-            swiperContainer.addEventListener('keydown', function(e) {
-                if (e.code === 'Space') {
-                    e.preventDefault();
-                    if (swiper.autoplay.running) {
-                        swiper.autoplay.stop();
-                    } else {
-                        swiper.autoplay.start();
-                    }
+                });
+                
+                console.log('Slider initialized successfully:', swiperContainer.id);
+                
+                // Keyboard event handling for space bar (play/pause)
+                if (swiperContainer.dataset.swiperKeyboard === 'true') {
+                    swiperContainer.addEventListener('keydown', function(e) {
+                        if (e.code === 'Space') {
+                            e.preventDefault();
+                            if (swiper.autoplay.running) {
+                                swiper.autoplay.stop();
+                            } else {
+                                swiper.autoplay.start();
+                            }
+                        }
+                    });
                 }
-            });
+                
+            } catch (error) {
+                console.error('Error initializing slider', swiperContainer.id, error);
+            }
         }
-    }
+    });
     
     // Enhanced Form Handling
     initializeFormEnhancements();

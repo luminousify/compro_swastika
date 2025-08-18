@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Test</title>
+    <script>
+        // Test if the page loads and check console for errors
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('=== SLIDER TEST PAGE LOADED ===');
+            
+            // Automatically navigate to the division page after 2 seconds
+            setTimeout(function() {
+                console.log('Redirecting to Adhesive division page...');
+                window.location.href = '/divisions/adhesive';
+            }, 2000);
+        });
+    </script>
+</head>
+<body>
+    <h1>Testing Slider Functionality</h1>
+    <p>This page will redirect to the Adhesive division page in 2 seconds...</p>
+    <p>Open browser console to see test results.</p>
+    
+    <script>
+        // Additional test script
+        setTimeout(function() {
+            if (window.location.pathname === '/divisions/adhesive') {
+                console.log('=== TESTING SLIDERS ON DIVISION PAGE ===');
+                
+                // Check if Swiper is loaded
+                if (typeof Swiper !== 'undefined') {
+                    console.log('✓ Swiper is loaded globally');
+                } else {
+                    console.error('✗ Swiper is not loaded');
+                }
+                
+                // Check for slider containers
+                const sliders = document.querySelectorAll('.swiper-container');
+                console.log('Found ' + sliders.length + ' slider containers');
+                
+                sliders.forEach(function(slider, index) {
+                    console.log('Slider ' + (index + 1) + ': ID = ' + slider.id);
+                    console.log('  - Has swiper-initialized class: ' + slider.classList.contains('swiper-initialized'));
+                    console.log('  - Number of slides: ' + slider.querySelectorAll('.swiper-slide').length);
+                    
+                    // Check for navigation
+                    const hasNavigation = slider.querySelector('.swiper-button-next') && slider.querySelector('.swiper-button-prev');
+                    console.log('  - Has navigation: ' + hasNavigation);
+                    
+                    // Check for pagination
+                    const hasPagination = slider.querySelector('.swiper-pagination');
+                    console.log('  - Has pagination: ' + hasPagination);
+                });
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

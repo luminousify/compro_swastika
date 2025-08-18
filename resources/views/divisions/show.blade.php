@@ -32,28 +32,6 @@
         </div>
     </section>
 
-    <!-- Additional Media Gallery -->
-    @if($division->media->count() > 1)
-        <section class="py-12 bg-gray-50">
-            <div class="container-custom">
-                <h2 class="text-2xl font-heading font-bold text-gray-900 text-center mb-8">Gallery</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    @foreach($division->media->skip(1) as $media)
-                        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                            <img src="{{ $media->url }}" 
-                                 alt="{{ $media->caption ?? $division->name }}" 
-                                 class="w-full h-64 object-cover">
-                            @if($media->caption)
-                                <div class="p-4">
-                                    <p class="text-sm text-gray-600">{{ $media->caption }}</p>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
 
     <!-- Content Sections -->
     <section class="py-16">
@@ -65,6 +43,17 @@
                         <h2 class="text-3xl font-heading font-bold text-gray-900">Our Products</h2>
                         <p class="text-gray-600 mt-2">Explore our comprehensive range of products</p>
                     </div>
+                    
+                    <!-- Products Image Slider -->
+                    @php
+                        $productSectionMedia = $division->media->where('collection', 'products');
+                    @endphp
+                    @if($productSectionMedia->count() > 0)
+                        <div class="mb-12">
+                            <x-image-slider :media="$productSectionMedia" :id="'products-section-slider'" />
+                        </div>
+                    @endif
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->products as $product)
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
@@ -74,8 +63,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                                     </svg>
                                 </div>
+                                
                                 @if($product->description)
-                                    <p class="text-gray-600 leading-relaxed">{{ $product->description }}</p>
+                                    <p class="text-gray-600 leading-relaxed mb-4">{{ $product->description }}</p>
                                 @endif
                                 @if($product->specifications)
                                     <div class="mt-4 pt-4 border-t border-gray-100">
@@ -95,6 +85,17 @@
                         <h2 class="text-3xl font-heading font-bold text-gray-900">Technologies</h2>
                         <p class="text-gray-600 mt-2">Advanced technologies powering our solutions</p>
                     </div>
+                    
+                    <!-- Technologies Image Slider -->
+                    @php
+                        $technologySectionMedia = $division->media->where('collection', 'technologies');
+                    @endphp
+                    @if($technologySectionMedia->count() > 0)
+                        <div class="mb-12">
+                            <x-image-slider :media="$technologySectionMedia" :id="'technologies-section-slider'" />
+                        </div>
+                    @endif
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->technologies as $technology)
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
@@ -104,6 +105,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                                     </svg>
                                 </div>
+                                
                                 @if($technology->description)
                                     <p class="text-gray-600 leading-relaxed">{{ $technology->description }}</p>
                                 @endif
@@ -120,6 +122,17 @@
                         <h2 class="text-3xl font-heading font-bold text-gray-900">Machinery & Equipment</h2>
                         <p class="text-gray-600 mt-2">State-of-the-art machinery for optimal performance</p>
                     </div>
+                    
+                    <!-- Machines Image Slider -->
+                    @php
+                        $machineSectionMedia = $division->media->where('collection', 'machines');
+                    @endphp
+                    @if($machineSectionMedia->count() > 0)
+                        <div class="mb-12">
+                            <x-image-slider :media="$machineSectionMedia" :id="'machines-section-slider'" />
+                        </div>
+                    @endif
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->machines as $machine)
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
@@ -130,8 +143,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
                                 </div>
+                                
                                 @if($machine->description)
-                                    <p class="text-gray-600 leading-relaxed">{{ $machine->description }}</p>
+                                    <p class="text-gray-600 leading-relaxed mb-4">{{ $machine->description }}</p>
                                 @endif
                                 @if($machine->specifications)
                                     <div class="mt-4 pt-4 border-t border-gray-100">

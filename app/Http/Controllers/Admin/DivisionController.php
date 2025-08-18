@@ -141,6 +141,14 @@ class DivisionController extends Controller
             'slug' => 'required|string|max:255|unique:divisions,slug,' . $division->id,
             'description' => 'required|string',
             'hero_image' => 'nullable|image|max:10240|dimensions:max_width=4096,max_height=4096',
+            'remove_current_image' => 'nullable|string', // Media ID to remove
+            'product_images' => 'nullable|array|max:5',
+            'product_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'technology_images' => 'nullable|array|max:5',
+            'technology_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'machine_images' => 'nullable|array|max:5',
+            'machine_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'remove_section_images' => 'nullable|string', // Comma-separated Media IDs to remove
         ]);
         
         $division->update([
@@ -149,16 +157,47 @@ class DivisionController extends Controller
             'description' => $validated['description'],
         ]);
         
-        // Handle hero image upload
-        if ($request->hasFile('hero_image')) {
-            // Delete old hero image if exists
-            $oldMedia = Media::where('mediable_type', Division::class)
+        // Handle image removal
+        if (!empty($validated['remove_current_image'])) {
+            $mediaId = $validated['remove_current_image'];
+            $media = Media::where('mediable_type', Division::class)
                 ->where('mediable_id', $division->id)
-                ->where('type', 'image')
+                ->where('id', $mediaId)
                 ->first();
                 
-            if ($oldMedia) {
-                $this->mediaService->deleteMedia($oldMedia);
+            if ($media) {
+                $this->mediaService->deleteMedia($media);
+            }
+        }
+        
+        // Handle section image removals
+        if (!empty($validated['remove_section_images'])) {
+            $removeIds = explode(',', $validated['remove_section_images']);
+            foreach ($removeIds as $mediaId) {
+                if (is_numeric($mediaId)) {
+                    $media = Media::where('mediable_type', Division::class)
+                        ->where('mediable_id', $division->id)
+                        ->where('id', $mediaId)
+                        ->first();
+                    if ($media) {
+                        $this->mediaService->deleteMedia($media);
+                    }
+                }
+            }
+        }
+        
+        // Handle hero image upload (replace or add new)
+        if ($request->hasFile('hero_image')) {
+            // Delete old hero image if exists (and not already removed above)
+            if (empty($validated['remove_current_image'])) {
+                $oldMedia = Media::where('mediable_type', Division::class)
+                    ->where('mediable_id', $division->id)
+                    ->where('type', 'image')
+                    ->first();
+                    
+                if ($oldMedia) {
+                    $this->mediaService->deleteMedia($oldMedia);
+                }
             }
             
             // Upload new hero image
@@ -169,12 +208,70 @@ class DivisionController extends Controller
             );
         }
         
+        // Handle section image uploads
+        $uploadedImages = 0;
+        
+        // Products section images
+        if ($request->hasFile('product_images')) {
+            foreach ($request->file('product_images') as $image) {
+                $this->mediaService->uploadImage(
+                    $image,
+                    $division,
+                    'general',
+                    'products'
+                );
+                $uploadedImages++;
+            }
+        }
+        
+        // Technologies section images
+        if ($request->hasFile('technology_images')) {
+            foreach ($request->file('technology_images') as $image) {
+                $this->mediaService->uploadImage(
+                    $image,
+                    $division,
+                    'general',
+                    'technologies'
+                );
+                $uploadedImages++;
+            }
+        }
+        
+        // Machines section images
+        if ($request->hasFile('machine_images')) {
+            foreach ($request->file('machine_images') as $image) {
+                $this->mediaService->uploadImage(
+                    $image,
+                    $division,
+                    'general',
+                    'machines'
+                );
+                $uploadedImages++;
+            }
+        }
+        
         // Clear cache
         Cache::forget('divisions:index');
         Cache::forget('division:' . $division->slug);
         
+        $message = 'Division updated successfully';
+        if (!empty($validated['remove_current_image']) && !$request->hasFile('hero_image')) {
+            $message .= ' and hero image removed';
+        } elseif ($request->hasFile('hero_image')) {
+            $message .= ' with new hero image';
+        }
+        
+        if ($uploadedImages > 0) {
+            $message .= ' and ' . $uploadedImages . ' section images added';
+        }
+        
+        if (!empty($validated['remove_section_images'])) {
+            $removedCount = count(explode(',', $validated['remove_section_images']));
+            $message .= ' and ' . $removedCount . ' section images removed';
+        }
+        
         return redirect()->route('admin.divisions.index')
-            ->with('success', 'Division updated successfully');
+            ->with('success', $message);
     }
     
     /**

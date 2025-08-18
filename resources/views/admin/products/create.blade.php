@@ -52,7 +52,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('admin.products.store', $division) }}" class="space-y-6" novalidate data-skip-form-enhancement="true">
+                <form method="POST" action="{{ route('admin.products.store', $division) }}" class="space-y-6" novalidate data-skip-form-enhancement="true" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="bg-white shadow-xl rounded-lg overflow-hidden border border-gray-100">
@@ -97,6 +97,31 @@
                                     <div id="description-error" class="form-error" role="alert">{{ $message }}</div>
                                 @enderror
                             </div>
+                            
+                            <!-- Image Management Notice -->
+                            <div class="form-group">
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                    <div class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-blue-900">Section Images</h4>
+                                            <p class="text-sm text-blue-700 mt-1">
+                                                Product images are managed at the division level. After creating this product, go to 
+                                                <strong>Divisions → Edit → Products Section Images</strong> to add images for the product section slider.
+                                            </p>
+                                            <a href="{{ route('admin.divisions.edit', $division) }}" class="inline-flex items-center mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                                Manage Division Images
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
@@ -120,4 +145,117 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('images');
+    const previewArea = document.getElementById('image-preview');
+    
+    if (imageInput && previewArea) {
+        imageInput.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            previewArea.innerHTML = '';
+            
+            if (files.length > 0) {
+                previewArea.classList.remove('hidden');
+                
+                files.forEach((file, index) => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const previewItem = document.createElement('div');
+                            previewItem.className = 'relative group';
+                            previewItem.innerHTML = `
+                                <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                                    <img src="${e.target.result}" 
+                                         alt="Preview ${index + 1}" 
+                                         class="w-full h-full object-cover">
+                                </div>
+                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 rounded-lg flex items-center justify-center">
+                                    <button type="button" 
+                                            class="opacity-0 group-hover:opacity-100 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-all duration-200"
+                                            onclick="removePreview(this, ${index})">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            `;
+                            previewArea.appendChild(previewItem);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            } else {
+                previewArea.classList.add('hidden');
+            }
+        });
+        
+        // Drag and drop functionality
+        const dropZone = imageInput.closest('.border-dashed');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+        
+        dropZone.addEventListener('drop', handleDrop, false);
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        function highlight(e) {
+            dropZone.classList.add('border-blue-500', 'bg-blue-50');
+        }
+        
+        function unhighlight(e) {
+            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+        }
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            imageInput.files = files;
+            imageInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+});
+
+function removePreview(button, index) {
+    const previewArea = document.getElementById('image-preview');
+    const imageInput = document.getElementById('images');
+    
+    // Remove preview item
+    button.closest('.relative').remove();
+    
+    // Update file input (create new FileList without the removed file)
+    const dt = new DataTransfer();
+    const files = Array.from(imageInput.files);
+    
+    files.forEach((file, i) => {
+        if (i !== index) {
+            dt.items.add(file);
+        }
+    });
+    
+    imageInput.files = dt.files;
+    
+    // Hide preview area if no files
+    if (imageInput.files.length === 0) {
+        previewArea.classList.add('hidden');
+    }
+}
+</script>
+@endpush
+
 @endsection

@@ -15,6 +15,7 @@ class Media extends Model
         'mediable_id',
         'type',
         'path_or_embed',
+        'collection',
         'caption',
         'flags',
         'is_home_slider',

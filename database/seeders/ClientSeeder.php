@@ -14,40 +14,46 @@ class ClientSeeder extends Seeder
     {
         $clients = [
             [
-                'name' => 'PT. Paramount Bed Indonesia',
-                'logo_path' => null,
+                'name' => 'JMM',
+                'logo_path' => 'logos/BzzKE1YWv0uP1WxU6Ne7VxOwq2HxRPIg.png',
                 'url' => null,
                 'order' => 1,
             ],
             [
-                'name' => 'PT. Andara Prima Utama',
-                'logo_path' => null,
+                'name' => 'PT. Paramount Bed Indonesia',
+                'logo_path' => 'logos/paramount-bed.png',
                 'url' => null,
                 'order' => 2,
             ],
             [
-                'name' => 'PT. Tridaya Interior',
-                'logo_path' => null,
+                'name' => 'PT. Andara Prima Utama',
+                'logo_path' => 'logos/andara-prima.png',
                 'url' => null,
                 'order' => 3,
             ],
             [
-                'name' => 'PT. NRM Indonesia',
-                'logo_path' => null,
+                'name' => 'PT. Tridaya Interior',
+                'logo_path' => 'logos/tridaya-interior.png',
                 'url' => null,
                 'order' => 4,
             ],
             [
-                'name' => 'PT. Grundfos Indonesia',
-                'logo_path' => null,
+                'name' => 'PT. NRM Indonesia',
+                'logo_path' => 'logos/nrm-indonesia.png',
                 'url' => null,
                 'order' => 5,
             ],
             [
-                'name' => 'PT. NGS Battery',
-                'logo_path' => null,
+                'name' => 'PT. Grundfos Indonesia',
+                'logo_path' => 'logos/grundfos-indonesia.png',
                 'url' => null,
                 'order' => 6,
+            ],
+            [
+                'name' => 'PT. NGS Battery',
+                'logo_path' => 'logos/ngs-battery.png',
+                'url' => null,
+                'order' => 7,
             ],
         ];
 

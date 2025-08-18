@@ -36,7 +36,7 @@ class MediaService
     /**
      * Upload and process an image
      */
-    public function uploadImage(UploadedFile $file, $entity, string $type = 'general'): Media
+    public function uploadImage(UploadedFile $file, $entity, string $type = 'general', ?string $collection = null): Media
     {
         // Increase memory limit for image processing
         $originalMemoryLimit = ini_get('memory_limit');
@@ -91,11 +91,12 @@ class MediaService
                 'mediable_id' => $entity->id,
                 'type' => MediaType::IMAGE,
                 'path_or_embed' => $originalPath,
+                'collection' => $collection,
                 'caption' => $file->getClientOriginalName(),
                 'width' => $width,
                 'height' => $height,
                 'bytes' => $file->getSize(),
-                'order' => $this->getNextOrder($entity),
+                'order' => $this->getNextOrder($entity, $collection),
                 'uploaded_by' => auth()->id(),
             ]);
         } finally {
@@ -378,9 +379,15 @@ class MediaService
     /**
      * Get next order number for entity
      */
-    private function getNextOrder($entity): int
+    private function getNextOrder($entity, ?string $collection = null): int
     {
-        return $entity->media()->max('order') + 1;
+        $query = $entity->media();
+        
+        if ($collection) {
+            $query->where('collection', $collection);
+        }
+        
+        return $query->max('order') + 1;
     }
 
     /**

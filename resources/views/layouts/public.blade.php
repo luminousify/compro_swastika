@@ -44,7 +44,11 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
                 <div class="md:col-span-2">
-                    <h3 class="text-2xl font-bold mb-4">{{ \App\Models\Setting::getValue('company_name', 'PT. Daya Swastika Perkasa') }}</h3>
+                    <div class="mb-4">
+                        <img src="{{ Storage::url('logos/DSP Logo.png') }}" 
+                             alt="{{ \App\Models\Setting::getValue('company_name', 'PT. Daya Swastika Perkasa') }}" 
+                             class="h-12 w-auto object-contain filter brightness-0 invert">
+                    </div>
                     <p class="text-gray-400 mb-4">{{ \App\Models\Setting::getValue('company_tagline', 'Excellence in Engineering Solutions') }}</p>
                     <div class="flex space-x-4">
                         @if($facebook = \App\Models\Setting::getValue('social_facebook'))
