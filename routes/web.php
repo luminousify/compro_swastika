@@ -163,3 +163,21 @@ if (config('deployment.enabled', false)) {
     Route::get('/deploy', [\App\Http\Controllers\DeploymentController::class, 'deploy'])->name('deploy');
     Route::get('/deploy/cleanup', [\App\Http\Controllers\DeploymentController::class, 'cleanup'])->name('deploy.cleanup');
 }
+
+// Asset serving routes for restricted hosting
+Route::get('/app-compiled.css', function () {
+    return response()->file(public_path('app-compiled.css'), ['Content-Type' => 'text/css']);
+});
+
+Route::get('/app-compiled.js', function () {
+    return response()->file(public_path('app-compiled.js'), ['Content-Type' => 'application/javascript']);
+});
+
+// Additional asset routes for build path
+Route::get('/build/app-compiled.css', function () {
+    return response()->file(public_path('app-compiled.css'), ['Content-Type' => 'text/css']);
+});
+
+Route::get('/build/app-compiled.js', function () {
+    return response()->file(public_path('app-compiled.js'), ['Content-Type' => 'application/javascript']);
+});
