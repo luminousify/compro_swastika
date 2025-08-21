@@ -100,6 +100,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 console.log('Slider initialized successfully:', swiperContainer.id);
                 
+                // Fix viewport positioning issue for sliders
+                setTimeout(() => {
+                    if (swiper && swiper.slideTo) {
+                        swiper.slideTo(0, 0);
+                        swiper.setTranslate(0);
+                        swiper.update();
+                    }
+                }, 100);
+                
                 // Keyboard event handling for space bar (play/pause)
                 if (swiperContainer.dataset.swiperKeyboard === 'true') {
                     swiperContainer.addEventListener('keydown', function(e) {

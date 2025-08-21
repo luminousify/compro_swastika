@@ -545,7 +545,7 @@
 
 .swiper-wrapper {
     @apply relative w-full h-full flex;
-    transform: translate3d(0px, 0px, 0px);
+    transform: translate3d(0px, 0px, 0px) !important;
 }
 
 .swiper-slide {
