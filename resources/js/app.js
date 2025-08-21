@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Slider settings - disable loop for single slides to prevent flickering
             loop: slideCount > 1,
-            centeredSlides: true,
+            centeredSlides: false,
             slidesPerView: 1,
             spaceBetween: 0,
             speed: 600,
