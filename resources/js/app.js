@@ -1,14 +1,13 @@
 import './bootstrap';
 import './lazy-loading';
 import { Swiper } from 'swiper';
-import { Navigation, Pagination, Autoplay, Keyboard, EffectFade } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay, Keyboard } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
 
 // Configure Swiper with modules first
-Swiper.use([Navigation, Pagination, Autoplay, Keyboard, EffectFade]);
+Swiper.use([Navigation, Pagination, Autoplay, Keyboard]);
 
 // Make Swiper available globally
 window.Swiper = Swiper;
@@ -36,10 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             slidesPerView: 1,
             spaceBetween: 0,
             speed: 600,
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            },
+            effect: 'slide',
             
             // Autoplay configuration
             autoplay: {
