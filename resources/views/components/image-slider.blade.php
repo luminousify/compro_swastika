@@ -15,7 +15,7 @@
                 <div class="swiper-slide">
                     <div class="relative w-full max-w-3xl mx-auto overflow-hidden rounded-xl bg-black shadow-lg">
                         <!-- Responsive container with multiple aspect ratios -->
-                        <div class="aspect-[16/13.5] sm:aspect-[4/4.5] lg:aspect-[16/13.5]">
+                        <div class="aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/3]">
                             <img src="{{ $item->url }}" 
                                  alt="{{ $item->caption ?? 'Image' }}" 
                                  class="w-full h-full object-cover object-center"
@@ -43,7 +43,7 @@
 {{-- Swiper initialization is now handled globally in app.js --}}
 @else
 <div class="no-images-placeholder mb-8">
-    <div class="max-w-3xl mx-auto aspect-[16/13.5] sm:aspect-[4/4.5] lg:aspect-[16/13.5] bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center">
+    <div class="max-w-3xl mx-auto aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/3] bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center">
         <div class="text-center text-gray-400">
             <svg class="mx-auto h-16 w-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 48 48" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
