@@ -15,7 +15,7 @@
                 <div class="swiper-slide">
                     <div class="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl bg-black shadow-lg">
                         <!-- Display image with taller aspect ratio -->
-                        <div class="w-full aspect-[16/13.2] md:aspect-[16/11]">
+                        <div class="w-full aspect-[16/13.2] md:aspect-[16/20]">
                             <img src="{{ $item->url }}" 
                                  alt="{{ $item->caption ?? 'Image' }}" 
                                  class="w-full h-full object-contain"
