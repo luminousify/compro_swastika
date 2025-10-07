@@ -18,7 +18,7 @@
                         <div class="w-full aspect-[16/13.2] md:aspect-[16/20]">
                             <img src="{{ $item->url }}" 
                                  alt="{{ $item->caption ?? 'Image' }}" 
-                                 class="w-full h-full object-contain"
+                                 class="w-full h-full object-cover"
                                  loading="{{ $loop->first ? 'eager' : 'lazy' }}"
                                  decoding="async"
                                  fetchpriority="{{ $loop->first ? 'high' : 'low' }}">
