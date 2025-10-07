@@ -47,7 +47,7 @@ class TechnologyController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max per image
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048', // 2MB max per image
         ]);
         
         // Get the highest order value for this division
@@ -64,7 +64,7 @@ class TechnologyController extends Controller
         // Handle image uploads
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $this->mediaService->storeImage($image, $technology, 'technology_image');
+                $this->mediaService->uploadImage($image, $technology, 'technology_image');
             }
         }
         
@@ -103,7 +103,7 @@ class TechnologyController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max per image
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048', // 2MB max per image
             'remove_images' => 'nullable|string',
         ]);
         
@@ -122,7 +122,7 @@ class TechnologyController extends Controller
         // Handle image uploads
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $this->mediaService->storeImage($image, $technology, 'technology_image');
+                $this->mediaService->uploadImage($image, $technology, 'technology_image');
             }
         }
         

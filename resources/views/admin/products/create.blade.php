@@ -119,7 +119,7 @@
                                                 <span class="font-medium text-indigo-600 hover:text-indigo-500">Click to upload</span>
                                                 or drag and drop
                                             </p>
-                                            <p class="text-xs text-gray-500">PNG, JPG, GIF, WebP up to 5MB each</p>
+                                            <p class="text-xs text-gray-500">PNG, JPG, GIF, WebP up to 2MB each</p>
                                         </div>
                                     </label>
                                 </div>
