@@ -56,22 +56,33 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->products as $product)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                                <div class="flex items-start justify-between mb-3">
-                                    <h3 class="text-xl font-semibold text-gray-900">{{ $product->name }}</h3>
-                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                    </svg>
-                                </div>
-                                
-                                @if($product->description)
-                                    <p class="text-gray-600 leading-relaxed mb-4">{{ $product->description }}</p>
-                                @endif
-                                @if($product->specifications)
-                                    <div class="mt-4 pt-4 border-t border-gray-100">
-                                        <p class="text-sm text-gray-500">{{ Str::limit($product->specifications, 100) }}</p>
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                                <!-- Product Image -->
+                                @if($product->media->count() > 0)
+                                    <div class="aspect-w-16 aspect-h-9 bg-gray-100">
+                                        <img src="{{ $product->media->first()->url }}" 
+                                             alt="{{ $product->name }}" 
+                                             class="w-full h-48 object-cover">
                                     </div>
                                 @endif
+                                
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h3 class="text-xl font-semibold text-gray-900">{{ $product->name }}</h3>
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    @if($product->description)
+                                        <p class="text-gray-600 leading-relaxed mb-4">{{ $product->description }}</p>
+                                    @endif
+                                    @if($product->specifications)
+                                        <div class="mt-4 pt-4 border-t border-gray-100">
+                                            <p class="text-sm text-gray-500">{{ Str::limit($product->specifications, 100) }}</p>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -98,17 +109,28 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->technologies as $technology)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                                <div class="flex items-start justify-between mb-3">
-                                    <h3 class="text-xl font-semibold text-gray-900">{{ $technology->name }}</h3>
-                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                    </svg>
-                                </div>
-                                
-                                @if($technology->description)
-                                    <p class="text-gray-600 leading-relaxed">{{ $technology->description }}</p>
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                                <!-- Technology Image -->
+                                @if($technology->media->count() > 0)
+                                    <div class="aspect-w-16 aspect-h-9 bg-gray-100">
+                                        <img src="{{ $technology->media->first()->url }}" 
+                                             alt="{{ $technology->name }}" 
+                                             class="w-full h-48 object-cover">
+                                    </div>
                                 @endif
+                                
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h3 class="text-xl font-semibold text-gray-900">{{ $technology->name }}</h3>
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    @if($technology->description)
+                                        <p class="text-gray-600 leading-relaxed">{{ $technology->description }}</p>
+                                    @endif
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -135,23 +157,34 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->machines as $machine)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                                <div class="flex items-start justify-between mb-3">
-                                    <h3 class="text-xl font-semibold text-gray-900">{{ $machine->name }}</h3>
-                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    </svg>
-                                </div>
-                                
-                                @if($machine->description)
-                                    <p class="text-gray-600 leading-relaxed mb-4">{{ $machine->description }}</p>
-                                @endif
-                                @if($machine->specifications)
-                                    <div class="mt-4 pt-4 border-t border-gray-100">
-                                        <p class="text-sm text-gray-500">{{ Str::limit($machine->specifications, 100) }}</p>
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                                <!-- Machine Image -->
+                                @if($machine->media->count() > 0)
+                                    <div class="aspect-w-16 aspect-h-9 bg-gray-100">
+                                        <img src="{{ $machine->media->first()->url }}" 
+                                             alt="{{ $machine->name }}" 
+                                             class="w-full h-48 object-cover">
                                     </div>
                                 @endif
+                                
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h3 class="text-xl font-semibold text-gray-900">{{ $machine->name }}</h3>
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    @if($machine->description)
+                                        <p class="text-gray-600 leading-relaxed mb-4">{{ $machine->description }}</p>
+                                    @endif
+                                    @if($machine->specifications)
+                                        <div class="mt-4 pt-4 border-t border-gray-100">
+                                            <p class="text-sm text-gray-500">{{ Str::limit($machine->specifications, 100) }}</p>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         @endforeach
                     </div>
