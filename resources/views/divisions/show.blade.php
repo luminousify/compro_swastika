@@ -54,9 +54,9 @@
                         </div>
                     @endif
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 {{ $division->products->count() === 1 ? 'justify-center' : '' }}">
                         @foreach($division->products as $product)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow mx-auto">
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow {{ $division->products->count() === 1 ? 'max-w-sm' : '' }}">
                                 <!-- Product Image -->
                                 @if($product->media->count() > 0)
                                     <div class="aspect-[16/13.2] bg-gray-100">
@@ -107,9 +107,9 @@
                         </div>
                     @endif
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 {{ $division->technologies->count() === 1 ? 'justify-center' : '' }}">
                         @foreach($division->technologies as $technology)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow mx-auto">
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow {{ $division->technologies->count() === 1 ? 'max-w-sm' : '' }}">
                                 <!-- Technology Image -->
                                 @if($technology->media->count() > 0)
                                     <div class="aspect-[16/13.2] bg-gray-100">
@@ -155,9 +155,9 @@
                         </div>
                     @endif
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 {{ $division->machines->count() === 1 ? 'justify-center' : '' }}">
                         @foreach($division->machines as $machine)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow mx-auto">
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow {{ $division->machines->count() === 1 ? 'max-w-sm' : '' }}">
                                 <!-- Machine Image -->
                                 @if($machine->media->count() > 0)
                                     <div class="aspect-[16/13.2] bg-gray-100">
