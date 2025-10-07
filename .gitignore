@@ -67,3 +67,5 @@ deploy.sh
 deploy-ftp.php
 public/build_clean/
 public/build_new/
+public/app-compiled.css
+public/app-compiled.js
