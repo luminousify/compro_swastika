@@ -181,3 +181,38 @@ Route::get('/build/app-compiled.css', function () {
 Route::get('/build/app-compiled.js', function () {
     return response()->file(public_path('app-compiled.js'), ['Content-Type' => 'application/javascript']);
 });
+
+// Storage serving routes for restricted hosting
+Route::get('/storage/logos/{filename}', function ($filename) {
+    $path = storage_path('app/public/logos/' . $filename);
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+    abort(404);
+});
+
+Route::get('/storage/settings/{filename}', function ($filename) {
+    $path = storage_path('app/public/settings/' . $filename);
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+    abort(404);
+});
+
+// Media serving routes for all storage directories
+Route::get('/storage/media/{path}', function ($path) {
+    $filePath = storage_path('app/public/media/' . $path);
+    if (file_exists($filePath)) {
+        return response()->file($filePath);
+    }
+    abort(404);
+})->where('path', '.*');
+
+// Generic storage route for any file
+Route::get('/storage/{directory}/{filename}', function ($directory, $filename) {
+    $path = storage_path('app/public/' . $directory . '/' . $filename);
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+    abort(404);
+});
