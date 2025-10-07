@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     slidesPerView: 1,
                     spaceBetween: 0,
                     loop: slideCount > 2,
+                    autoHeight: true,
                     autoplay: {
                         delay: 5000,
                         disableOnInteraction: false,
