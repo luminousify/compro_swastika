@@ -11,7 +11,7 @@
          data-swiper-simulate-touch="true">
         
         @php
-            $sliderPadding = 0; // height is 82.5% of width (~40:33 aspect ratio)
+            $sliderPadding = -1000; // height is 82.5% of width (~40:33 aspect ratio)
         @endphp
 
         <div class="swiper-wrapper">
