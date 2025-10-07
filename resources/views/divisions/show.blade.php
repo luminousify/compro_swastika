@@ -54,7 +54,7 @@
                         </div>
                     @endif
                     
-                    <div class="{{ $division->products->count() === 1 ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' }}">
+                    <div class="{{ $division->products->count() === 1 ? 'flex justify-center max-w-sm mx-auto' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' }}">
                         @foreach($division->products as $product)
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                                 <!-- Product Image -->
@@ -107,7 +107,7 @@
                         </div>
                     @endif
                     
-                    <div class="{{ $division->technologies->count() === 1 ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' }}">
+                    <div class="{{ $division->technologies->count() === 1 ? 'flex justify-center max-w-sm mx-auto' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' }}">
                         @foreach($division->technologies as $technology)
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                                 <!-- Technology Image -->
@@ -155,7 +155,7 @@
                         </div>
                     @endif
                     
-                    <div class="{{ $division->machines->count() === 1 ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' }}">
+                    <div class="{{ $division->machines->count() === 1 ? 'flex justify-center max-w-sm mx-auto' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' }}">
                         @foreach($division->machines as $machine)
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                                 <!-- Machine Image -->
