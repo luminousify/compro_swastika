@@ -537,6 +537,29 @@
     @apply relative;
 }
 
+/* AutoHeight Swiper Styles */
+.autoheight-swiper-container {
+    position: relative;
+    width: 100%;
+}
+
+.autoheight-swiper-container .swiper {
+    width: 100%;
+    height: auto;
+}
+
+.autoheight-swiper-container .swiper-slide {
+    height: auto;
+    display: flex;
+    align-items: stretch;
+}
+
+.autoheight-swiper-container .slide-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Simple Swiper Styles */
 .swiper-container {
     position: relative;

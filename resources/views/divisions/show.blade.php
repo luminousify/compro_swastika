@@ -191,6 +191,40 @@
                 </div>
             @endif
 
+            <!-- AutoHeight Swiper Section -->
+            <div class="mb-16">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-heading font-bold text-gray-900">Featured Products</h2>
+                    <p class="text-gray-600 mt-2">Dynamic showcase with adaptive heights</p>
+                </div>
+                
+                <x-autoheight-swiper :slides="[
+                    [
+                        'title' => 'Premium Abrasive Solutions',
+                        'image' => 'https://via.placeholder.com/400x200/4F46E5/FFFFFF?text=Premium+Abrasive',
+                        'content' => '<p>High-quality abrasive products designed for industrial applications. Our premium solutions ensure optimal performance and durability.</p><ul class=\"mt-4 space-y-2\"><li>• Superior cutting performance</li><li>• Extended service life</li><li>• Consistent quality standards</li></ul>'
+                    ],
+                    [
+                        'title' => 'Automotive Grade Materials',
+                        'content' => '<p>Specialized abrasive materials engineered specifically for automotive applications. Perfect for brake pad manufacturing, surface preparation, and finishing operations.</p><p class=\"mt-4\">Our automotive-grade materials meet strict industry standards and provide exceptional results in demanding environments.</p>'
+                    ],
+                    [
+                        'title' => 'Industrial Membrane Technology',
+                        'image' => 'https://via.placeholder.com/400x300/059669/FFFFFF?text=Membrane+Tech',
+                        'content' => '<p>Advanced membrane technology for filtration and separation processes. Our industrial membranes offer superior performance in various applications.</p>'
+                    ],
+                    [
+                        'title' => 'Custom Solutions',
+                        'content' => '<p>Tailored solutions for unique industrial requirements. Our engineering team works closely with clients to develop custom abrasive and membrane solutions.</p><p class=\"mt-4\">From prototype development to full-scale production, we deliver solutions that meet your specific needs.</p><p class=\"mt-4\">Contact our technical team to discuss your requirements and explore how we can help optimize your processes.</p>'
+                    ],
+                    [
+                        'title' => 'Quality Assurance',
+                        'image' => 'https://via.placeholder.com/400x250/DC2626/FFFFFF?text=Quality+Assurance',
+                        'content' => '<p>Comprehensive quality control processes ensure every product meets our high standards. We maintain ISO certifications and rigorous testing protocols.</p>'
+                    ]
+                ]" />
+            </div>
+
             <!-- Call to Action -->
             <div class="text-center mt-12 p-8 bg-gray-50 rounded-lg">
                 <h3 class="text-2xl font-heading font-bold text-gray-900 mb-4">Interested in {{ $division->name }}?</h3>
