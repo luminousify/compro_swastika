@@ -13,12 +13,12 @@
         <div class="swiper-wrapper">
             @foreach($media as $item)
                 <div class="swiper-slide">
-                    <div class="relative w-full max-w-3xl mx-auto overflow-hidden rounded-xl bg-black shadow-lg">
-                        <!-- Display image at natural size -->
-                        <div class="w-full">
+                    <div class="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl bg-black shadow-lg">
+                        <!-- Display image with taller aspect ratio -->
+                        <div class="w-full aspect-[16/12] md:aspect-[16/10]">
                             <img src="{{ $item->url }}" 
                                  alt="{{ $item->caption ?? 'Image' }}" 
-                                 class="w-full h-auto object-contain"
+                                 class="w-full h-full object-contain"
                                  loading="{{ $loop->first ? 'eager' : 'lazy' }}"
                                  decoding="async"
                                  fetchpriority="{{ $loop->first ? 'high' : 'low' }}">
