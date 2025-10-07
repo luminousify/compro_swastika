@@ -56,7 +56,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->products as $product)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow mx-auto">
                                 <!-- Product Image -->
                                 @if($product->media->count() > 0)
                                     <div class="aspect-[16/13.2] bg-gray-100">
@@ -109,7 +109,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->technologies as $technology)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow mx-auto">
                                 <!-- Technology Image -->
                                 @if($technology->media->count() > 0)
                                     <div class="aspect-[16/13.2] bg-gray-100">
@@ -157,7 +157,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($division->machines as $machine)
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow mx-auto">
                                 <!-- Machine Image -->
                                 @if($machine->media->count() > 0)
                                     <div class="aspect-[16/13.2] bg-gray-100">
