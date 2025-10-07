@@ -46,6 +46,8 @@ class MachineController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max per image
         ]);
         
         // Get the highest order value for this division
@@ -59,8 +61,16 @@ class MachineController extends Controller
             'order' => $maxOrder + 1,
         ]);
         
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $this->mediaService->storeImage($image, $machine, 'machine_image');
+            }
+        }
+        
         // Clear cache
         Cache::forget('divisions:index');
+        Cache::forget('division:' . $division->slug);
         
         return redirect()->route('admin.divisions.show', $division)
             ->with('success', 'Machine created successfully');
@@ -92,6 +102,9 @@ class MachineController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max per image
+            'remove_images' => 'nullable|string',
         ]);
         
         // Update machine
@@ -100,8 +113,22 @@ class MachineController extends Controller
             'description' => $validated['description'],
         ]);
         
+        // Handle image removal
+        if ($request->filled('remove_images')) {
+            $mediaIds = explode(',', $request->remove_images);
+            $machine->media()->whereIn('id', $mediaIds)->delete();
+        }
+        
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $this->mediaService->storeImage($image, $machine, 'machine_image');
+            }
+        }
+        
         // Clear cache
         Cache::forget('divisions:index');
+        Cache::forget('division:' . $division->slug);
         
         return redirect()->route('admin.divisions.show', $division)
             ->with('success', 'Machine updated successfully');

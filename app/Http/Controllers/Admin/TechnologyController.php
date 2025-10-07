@@ -46,6 +46,8 @@ class TechnologyController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max per image
         ]);
         
         // Get the highest order value for this division
@@ -59,8 +61,16 @@ class TechnologyController extends Controller
             'order' => $maxOrder + 1,
         ]);
         
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $this->mediaService->storeImage($image, $technology, 'technology_image');
+            }
+        }
+        
         // Clear cache
         Cache::forget('divisions:index');
+        Cache::forget('division:' . $division->slug);
         
         return redirect()->route('admin.divisions.show', $division)
             ->with('success', 'Technology created successfully');
@@ -92,6 +102,9 @@ class TechnologyController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max per image
+            'remove_images' => 'nullable|string',
         ]);
         
         // Update technology
@@ -100,8 +113,22 @@ class TechnologyController extends Controller
             'description' => $validated['description'],
         ]);
         
+        // Handle image removal
+        if ($request->filled('remove_images')) {
+            $mediaIds = explode(',', $request->remove_images);
+            $technology->media()->whereIn('id', $mediaIds)->delete();
+        }
+        
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $this->mediaService->storeImage($image, $technology, 'technology_image');
+            }
+        }
+        
         // Clear cache
         Cache::forget('divisions:index');
+        Cache::forget('division:' . $division->slug);
         
         return redirect()->route('admin.divisions.show', $division)
             ->with('success', 'Technology updated successfully');

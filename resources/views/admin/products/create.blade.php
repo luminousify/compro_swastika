@@ -98,29 +98,41 @@
                                 @enderror
                             </div>
                             
-                            <!-- Image Management Notice -->
+                            <!-- Product Images -->
                             <div class="form-group">
-                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                                    <div class="flex items-start">
-                                        <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                <label for="images" class="form-label">Product Images</label>
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                                    <input type="file" 
+                                           name="images[]" 
+                                           id="images" 
+                                           multiple 
+                                           accept="image/*"
+                                           class="hidden @error('images') error @enderror"
+                                           aria-describedby="images-help @error('images') images-error @enderror"
+                                           @error('images') aria-invalid="true" @enderror>
+                                    <label for="images" class="cursor-pointer">
+                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <div>
-                                            <h4 class="text-sm font-medium text-blue-900">Section Images</h4>
-                                            <p class="text-sm text-blue-700 mt-1">
-                                                Product images are managed at the division level. After creating this product, go to 
-                                                <strong>Divisions → Edit → Products Section Images</strong> to add images for the product section slider.
+                                        <div class="mt-2">
+                                            <p class="text-sm text-gray-600">
+                                                <span class="font-medium text-indigo-600 hover:text-indigo-500">Click to upload</span>
+                                                or drag and drop
                                             </p>
-                                            <a href="{{ route('admin.divisions.edit', $division) }}" class="inline-flex items-center mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                                Manage Division Images
-                                            </a>
+                                            <p class="text-xs text-gray-500">PNG, JPG, GIF, WebP up to 5MB each</p>
                                         </div>
-                                    </div>
+                                    </label>
                                 </div>
+                                <div id="image-preview" class="hidden mt-4 grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+                                <div id="images-help" class="form-help">
+                                    Upload multiple images to showcase this product. Images will be displayed in the product section.
+                                </div>
+                                @error('images')
+                                    <div id="images-error" class="form-error" role="alert">{{ $message }}</div>
+                                @enderror
+                                @error('images.*')
+                                    <div class="form-error" role="alert">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         
