@@ -11,14 +11,14 @@
          data-swiper-simulate-touch="true">
         
         @php
-            $sliderPadding = 125; // height is 125% of width (16:20 aspect ratio)
+            $sliderPadding = 250; // height is 250% of width (16:40 aspect ratio)
         @endphp
 
         <div class="swiper-wrapper">
             @foreach($media as $item)
                 <div class="swiper-slide">
                     <div class="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl bg-black shadow-lg">
-                        <div class="relative w-full" style="padding-bottom: {{ $sliderPadding }}%; min-height: 600px; aspect-ratio: 16 / 20;">
+                        <div class="relative w-full" style="padding-bottom: {{ $sliderPadding }}%; min-height: 600px; aspect-ratio: 16 / 40;">
                             <img src="{{ $item->url }}" 
                                  alt="{{ $item->caption ?? 'Image' }}" 
                                  class="absolute inset-0 w-full h-full object-cover"
