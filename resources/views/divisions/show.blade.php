@@ -59,7 +59,7 @@
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                                 <!-- Product Image -->
                                 @if($product->media->count() > 0)
-                                    <div class="aspect-[16/13.2] bg-gray-100">
+                                    <div class="{{ $division->products->count() === 1 ? 'aspect-[4/3]' : 'aspect-[16/13.2]' }} bg-gray-100">
                                         <img src="{{ $product->media->first()->url }}" 
                                              alt="{{ $product->name }}" 
                                              class="w-full h-full object-cover">
@@ -112,7 +112,7 @@
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                                 <!-- Technology Image -->
                                 @if($technology->media->count() > 0)
-                                    <div class="aspect-[16/13.2] bg-gray-100">
+                                    <div class="{{ $division->technologies->count() === 1 ? 'aspect-[4/3]' : 'aspect-[16/13.2]' }} bg-gray-100">
                                         <img src="{{ $technology->media->first()->url }}" 
                                              alt="{{ $technology->name }}" 
                                              class="w-full h-full object-cover">
@@ -160,7 +160,7 @@
                             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                                 <!-- Machine Image -->
                                 @if($machine->media->count() > 0)
-                                    <div class="aspect-[16/13.2] bg-gray-100">
+                                    <div class="{{ $division->machines->count() === 1 ? 'aspect-[4/3]' : 'aspect-[16/13.2]' }} bg-gray-100">
                                         <img src="{{ $machine->media->first()->url }}" 
                                              alt="{{ $machine->name }}" 
                                              class="w-full h-full object-cover">
