@@ -107,7 +107,7 @@
                                     @foreach($product->media as $media)
                                     <div class="relative group">
                                         <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                                            <img src="{{ $media->getUrl() }}" 
+                                            <img src="{{ $media->url }}" 
                                                  alt="{{ $product->name }} - Image {{ $loop->iteration }}" 
                                                  class="w-full h-full object-cover">
                                         </div>

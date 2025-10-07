@@ -55,6 +55,11 @@ class Media extends Model
      */
     public function getUrlAttribute(): string
     {
+        // Handle null or empty path
+        if (empty($this->path_or_embed)) {
+            return $this->getPlaceholderUrl();
+        }
+
         if ($this->type === MediaType::VIDEO && str_contains($this->path_or_embed, 'http')) {
             return $this->path_or_embed;
         }
@@ -62,17 +67,25 @@ class Media extends Model
         // Check if file exists, return placeholder if not
         $storagePath = storage_path('app/public/' . $this->path_or_embed);
         if (! file_exists($storagePath)) {
-            return 'data:image/svg+xml;base64,' . base64_encode(
-                '<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="100%" height="100%" fill="#e5e7eb"/>
-                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial" font-size="48" fill="#6b7280">
-                        ' . htmlspecialchars($this->caption ?: 'Image Placeholder') . '
-                    </text>
-                </svg>'
-            );
+            return $this->getPlaceholderUrl();
         }
 
         return asset('storage/' . $this->path_or_embed);
+    }
+
+    /**
+     * Get placeholder URL for missing images
+     */
+    private function getPlaceholderUrl(): string
+    {
+        return 'data:image/svg+xml;base64,' . base64_encode(
+            '<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#e5e7eb"/>
+                <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial" font-size="48" fill="#6b7280">
+                    ' . htmlspecialchars($this->caption ?: 'Image Placeholder') . '
+                </text>
+            </svg>'
+        );
     }
 
     /**
