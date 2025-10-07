@@ -1,10 +1,15 @@
 import './bootstrap';
 import './lazy-loading';
+import Alpine from 'alpinejs';
 import { Swiper } from 'swiper';
 import { Navigation, Pagination, Autoplay, Keyboard } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
+// Initialize Alpine.js for interactive components
+window.Alpine = Alpine;
+Alpine.start();
 
 // Configure Swiper with modules first
 Swiper.use([Navigation, Pagination, Autoplay, Keyboard]);
@@ -21,110 +26,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const swiperContainers = document.querySelectorAll('.swiper-container');
     console.log('Found', swiperContainers.length, 'slider containers');
     
-    swiperContainers.forEach(function(swiperContainer, index) {
+    swiperContainers.forEach(function(swiperContainer) {
         if (swiperContainer && !swiperContainer.classList.contains('swiper-initialized')) {
-            console.log('Initializing slider:', swiperContainer.id);
             try {
                 const slideCount = swiperContainer.querySelectorAll('.swiper-slide').length;
-                const swiper = new Swiper(swiperContainer, {
-            // Modules are already registered globally
-            
-            // Slider settings - disable loop for single slides to prevent flickering
-            loop: slideCount > 1,
-            centeredSlides: false,
-            slidesPerView: 1,
-            spaceBetween: 0,
-            speed: 600,
-            effect: 'slide',
-            
-            // Autoplay configuration
-            autoplay: {
-                delay: parseInt(swiperContainer.dataset.swiperAutoplay) || 5000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: swiperContainer.dataset.swiperPauseOnHover === 'true',
-            },
-            
-            // Navigation arrows - target specific to this slider
-            navigation: {
-                nextEl: swiperContainer.querySelector('.swiper-button-next'),
-                prevEl: swiperContainer.querySelector('.swiper-button-prev'),
-            },
-            
-            // Pagination - target specific to this slider
-            pagination: {
-                el: swiperContainer.querySelector('.swiper-pagination'),
-                clickable: true,
-                dynamicBullets: true,
-            },
-            
-            // Keyboard navigation
-            keyboard: {
-                enabled: swiperContainer.dataset.swiperKeyboard === 'true',
-                onlyInViewport: true,
-            },
-            
-            // Touch/swipe settings
-            touchRatio: swiperContainer.dataset.swiperTouch === 'true' ? 1 : 0,
-            simulateTouch: swiperContainer.dataset.swiperSimulateTouch === 'true',
-            
-            // Responsive breakpoints
-            breakpoints: {
-                320: {
+                new Swiper(swiperContainer, {
                     slidesPerView: 1,
                     spaceBetween: 0,
-                },
-                768: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                },
-                1024: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                }
-            },
-            
-            // Events
-            on: {
-                init: function() {
-                    // Remove loading state when slider is initialized
-                    const loadingElement = swiperContainer.querySelector('.swiper-loading');
-                    if (loadingElement) {
-                        loadingElement.remove();
-                    }
-                },
-                slideChange: function() {
-                    // Add any slide change logic here if needed
-                }
-            }
+                    loop: slideCount > 2,
+                    autoplay: {
+                        delay: 5000,
+                        disableOnInteraction: false,
+                    },
+                    navigation: {
+                        nextEl: swiperContainer.querySelector('.swiper-button-next'),
+                        prevEl: swiperContainer.querySelector('.swiper-button-prev'),
+                    },
+                    pagination: {
+                        el: swiperContainer.querySelector('.swiper-pagination'),
+                        clickable: true,
+                    },
                 });
-                
-                console.log('Slider initialized successfully:', swiperContainer.id);
-                
-                // Fix viewport positioning issue for sliders
-                setTimeout(() => {
-                    if (swiper && swiper.slideTo) {
-                        swiper.slideTo(0, 0);
-                        swiper.setTranslate(0);
-                        swiper.update();
-                    }
-                }, 100);
-                
-                // Keyboard event handling for space bar (play/pause)
-                if (swiperContainer.dataset.swiperKeyboard === 'true') {
-                    swiperContainer.addEventListener('keydown', function(e) {
-                        if (e.code === 'Space') {
-                            e.preventDefault();
-                            if (swiper.autoplay.running) {
-                                swiper.autoplay.stop();
-                            } else {
-                                swiper.autoplay.start();
-                            }
-                        }
-                    });
-                }
-                
             } catch (error) {
-                console.error('Error initializing slider', swiperContainer.id, error);
+                console.error('Error initializing slider:', error);
             }
         }
     });
